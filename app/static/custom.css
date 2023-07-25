@@ -1,0 +1,9 @@
+/* static/custom.css */
+.navcolor {
+    background-color: #4445a2;
+}
+
+/* Optionally, you can change the color of the navbar links */
+.navbar .nav-link {
+    color: #4445a2;
+}
