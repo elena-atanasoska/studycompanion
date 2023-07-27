@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout as auth_logout
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 # Create your views here.
-from app.models import Comment
+from app.models import Comment, Assignment
 
 
 def your_view(request):
@@ -39,3 +39,10 @@ def user_login(request):
     else:
         form = CustomAuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
+
+def assignments_all(request):
+    queryset = Assignment.objects.all()
+    context = {"assignments" : queryset}
+    return render(request, "assignments.html", context = context)
+

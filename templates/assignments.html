@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="text-center my-5">
+        <h1 class="primary-text"> My Assignments </h1>
+    </div>
+
+    <!-- Updated code with card layout -->
+    <div class="mx-5 px-4">
+        <div class="row">
+            {% for assignment in assignments %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ assignment.name }}</h5>
+                                    <p class="card-text">{{ assignment.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <button id="newAssignmentButton" type="button" class="btn btn-primary mx-5 px-4">Add New Assignment</button>
+{#    <script>#}
+{#    document.getElementById('newAssignmentButton').addEventListener('click', function () {#}
+{#        window.location.href = "{% url 'add_assignment' %}";#}
+{#    });#}
+{#    </script>#}
+
+{% endblock %}
