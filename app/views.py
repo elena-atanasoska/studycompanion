@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout as auth_logout
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 # Create your views here.
@@ -8,7 +8,11 @@ from app.models import Comment
 
 def your_view(request):
     comments = Comment.objects.all()
-    return render(request, 'index.html', {'comments': comments})
+    return render(request, 'index.html', {'comments': comments, 'user': request.user})
+
+def user_logout(request):
+    auth_logout(request)
+    return redirect('home')
 
 
 def register(request):
@@ -31,7 +35,7 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')  # Change 'home' to the name of your home page URL pattern
+                return redirect('home')
     else:
         form = CustomAuthenticationForm()
     return render(request, 'login.html', {'form': form})
