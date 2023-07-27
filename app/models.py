@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager, Group, User, PermissionsMixin
 from django.db import models
+from datetime import datetime, timedelta
 
 
 class CustomUserManager(BaseUserManager):
@@ -47,11 +48,11 @@ class Comment(models.Model):
 
     @property
     def rating(self):
-        return max(0, min(5, self._rating))
+        return max(0, min(5, self.user_rating))
 
     @rating.setter
     def rating(self, value):
-        self._rating = max(0, min(5, value))
+        self.user_rating = max(0, min(5, value))
 
 
 class Course(models.Model):
@@ -62,9 +63,22 @@ class Course(models.Model):
 
 
 class Assignment(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(max_length=650)
+    PROGRESS_CHOICES = [(i, str(i)) for i in range(11)]
+
+    name = models.CharField(max_length=200)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    description = models.TextField()
+    progress = models.IntegerField(choices=PROGRESS_CHOICES, default=0)
+    due_date = models.DateField(default=datetime.now() + timedelta(days=7))
 
     def __str__(self):
-        return f"{self.name}"
+        return self.name
+
+
+class Task(models.Model):
+    name = models.CharField(max_length=200)
+    is_finished = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
