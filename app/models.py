@@ -53,5 +53,18 @@ class Comment(models.Model):
     def rating(self, value):
         self._rating = max(0, min(5, value))
 
-# class Course(models.Model):
-#     name = models.CharField(max_length=100)
+
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class Assignment(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(max_length=650)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name}"

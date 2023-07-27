@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin, GroupAdmin
 from django.contrib.auth.models import Group
-from .models import CustomUser
+from .models import CustomUser, Assignment, Course
 
 
 class CustomUserAdmin(UserAdmin):
@@ -23,3 +23,13 @@ class AdminUsersGroup(GroupAdmin):
 
 
 admin.site.register(Group, AdminUsersGroup)
+
+class AssignmentAdmin(admin.ModelAdmin):
+    list_display = ["name", "course", ]
+
+admin.site.register(Assignment, AssignmentAdmin)
+
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ["name", ]
+
+admin.site.register(Course, CourseAdmin)
