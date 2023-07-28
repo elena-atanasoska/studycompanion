@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block content %}
@@ -11,14 +10,13 @@
         <div class="row">
             {% for assignment in assignments %}
                 <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ assignment.name }}</h5>
-                                    <p class="card-text">{{ assignment.description }}</p>
-                                </div>
-                            </div>
+                    <div class="card navcolor-border">
+                        <h4 class="card-header navcolor text-white">{{ assignment.name }}</h4>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ assignment.course }}</h5>
+                            <p class="card-text">Due Date: {{ assignment.due_date }}</p>
+                            <p class="card-text">{{ assignment.description }}</p>
+                            {#<a href="#" class="btn btn-primary">Go somewhere</a>#}
                         </div>
                     </div>
                 </div>
@@ -27,11 +25,10 @@
     </div>
 
 
-    <button id="newAssignmentButton" type="button" class="btn btn-primary mx-5 px-4">Add New Assignment</button>
-{#    <script>#}
-{#    document.getElementById('newAssignmentButton').addEventListener('click', function () {#}
-{#        window.location.href = "{% url 'add_assignment' %}";#}
-{#    });#}
-{#    </script>#}
+    <a href="{% url 'add_assignment_task' %}" class="btn btn-primary mx-5 px-4">Add New Assignment</a>{#    <script>#}
+    {#    document.getElementById('newAssignmentButton').addEventListener('click', function () {#}
+    {#        window.location.href = "{% url 'add_assignment' %}";#}
+    {#    });#}
+    {#    </script>#}
 
 {% endblock %}

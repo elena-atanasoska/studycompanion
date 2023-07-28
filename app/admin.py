@@ -16,15 +16,15 @@ class CustomUserAdmin(UserAdmin):
     )
 
 
-admin.site.unregister(Group)
+# admin.site.unregister(Group)
 admin.site.register(CustomUser, CustomUserAdmin)
 
 
-class AdminUsersGroup(GroupAdmin):
-    pass
-
-
-admin.site.register(Group, AdminUsersGroup)
+# class AdminUsersGroup(GroupAdmin):
+#     pass
+#
+#
+# admin.site.register(Group, AdminUsersGroup)
 
 
 class CourseAdmin(admin.ModelAdmin):
@@ -34,50 +34,36 @@ class CourseAdmin(admin.ModelAdmin):
 admin.site.register(Course, CourseAdmin)
 
 
-class TaskInlineFormSet(BaseInlineFormSet):
-    def __init__(self, *args, **kwargs):
-        super(TaskInlineFormSet, self).__init__(*args, **kwargs)
-        self.queryset = Task.objects.none()  # Hide existing tasks for new assignments
-
-
-class TaskInline(admin.StackedInline):
+class TaskInline(admin.TabularInline):  # or admin.StackedInline for a different display style
     model = Task
     extra = 1
-    formset = TaskInlineFormSet
-
-
-class AssignmentAdminForm(forms.ModelForm):
-    class Meta:
-        model = Assignment
-        exclude = ()
 
 
 class AssignmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'course', 'user', 'progress', 'due_date')
-    form = AssignmentAdminForm
-
-    def save_model(self, request, obj, form, change):
-        # Save the Assignment object first
-        super().save_model(request, obj, form, change)
-
-        # Handle tasks for the Assignment
-        task_data = form.cleaned_data.get('tasks')
-        if task_data:
-            task_names = task_data.split(',')  # Assuming task_data is a comma-separated string of task names
-            tasks = Task.objects.filter(name__in=task_names)
-            obj.tasks.set(tasks)
-
-    def get_form(self, request, obj=None, **kwargs):
-        # Override get_form method to pass the current assignment object to the custom form
-        form = super().get_form(request, obj, **kwargs)
-        form.current_assignment = obj
-        return form
-
-    def get_formsets_with_inlines(self, request, obj=None):
-        # Override get_formsets_with_inlines to pass the current assignment object to the inline formset
-        for inline in self.get_inline_instances(request, obj):
-            yield inline.get_formset(request, obj), inline
+    inlines = [TaskInline]
+    #
+    # def save_model(self, request, obj, form, change):
+    #     # Save the Assignment object first
+    #     super().save_model(request, obj, form, change)
+    #
+    #     # Handle tasks for the Assignment
+    #     task_data = form.cleaned_data.get('tasks')
+    #     if task_data:
+    #         task_names = task_data.split(',')  # Assuming task_data is a comma-separated string of task names
+    #         tasks = Task.objects.filter(name__in=task_names)
+    #         obj.tasks.set(tasks)
+    #
+    # def get_form(self, request, obj=None, **kwargs):
+    #     # Override get_form method to pass the current assignment object to the custom form
+    #     form = super().get_form(request, obj, **kwargs)
+    #     form.current_assignment = obj
+    #     return form
+    #
+    # def get_formsets_with_inlines(self, request, obj=None):
+    #     # Override get_formsets_with_inlines to pass the current assignment object to the inline formset
+    #     for inline in self.get_inline_instances(request, obj):
+    #         yield inline.get_formset(request, obj), inline
 
 
 admin.site.register(Assignment, AssignmentAdmin)
-admin.site.register(Task)

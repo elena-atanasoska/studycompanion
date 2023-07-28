@@ -79,6 +79,7 @@ class Assignment(models.Model):
 class Task(models.Model):
     name = models.CharField(max_length=200)
     is_finished = models.BooleanField(default=False)
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
