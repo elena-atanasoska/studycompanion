@@ -73,3 +73,10 @@ def add_assignment_task(request):
         form = AssignmentTaskForm()
 
     return render(request, 'add_assignment_task.html', {'form': form})
+
+
+def about(request):
+    return render(request, 'about.html')
+
+def contact(request):
+    return render(request, 'contact.html')
