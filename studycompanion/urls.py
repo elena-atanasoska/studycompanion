@@ -29,5 +29,7 @@ urlpatterns = [
     path('assignments/', views.assignments_all, name='assignments'),
     path('assignments/add/', views.add_assignment_task, name='add_assignment_task'),
     path('about/', views.about, name='about'),
-    path('contact/', views.contact, name='contact')
+    path('contact/', views.contact, name='contact'),
+    path('reminders/', views.reminders_all, name='reminders'),
+    path('reminders/add', views.add_reminder, name='add_reminder')
 ]

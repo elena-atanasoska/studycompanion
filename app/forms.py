@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import modelformset_factory
 
-from .models import CustomUser, Assignment, Task
+from .models import CustomUser, Assignment, Task, Reminder
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -27,3 +27,17 @@ class AssignmentTaskForm(forms.ModelForm):
 
 #
 # TaskFormSet = modelformset_factory(Task, fields=('name',), extra=0)
+
+
+class ReminderForm(forms.ModelForm):
+    class Meta:
+        model = Reminder
+        fields = ['name', 'description', 'course', 'deadline']
+
+    widgets = {
+        'name': forms.TextInput(attrs={'class': 'form-control'}),
+        'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        'course': forms.Select(attrs={'class': 'form-control'}),
+        'deadline': forms.DateTimeInput(attrs={'class': 'form-control datetimepicker'}),
+    }
+
