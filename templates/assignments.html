@@ -16,7 +16,10 @@
                             <h5 class="card-title">{{ assignment.course }}</h5>
                             <p class="card-text">Due Date: {{ assignment.due_date }}</p>
                             <p class="card-text">{{ assignment.description }}</p>
-                            {#<a href="#" class="btn btn-primary">Go somewhere</a>#}
+                            <div class="text-right">
+                                <a href="{% url 'assignment_details' name=assignment.name %}" class="btn btn-link">See more</a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -25,10 +28,6 @@
     </div>
 
 
-    <a href="{% url 'add_assignment_task' %}" class="btn btn-primary mx-5 px-4">Add New Assignment</a>{#    <script>#}
-    {#    document.getElementById('newAssignmentButton').addEventListener('click', function () {#}
-    {#        window.location.href = "{% url 'add_assignment' %}";#}
-    {#    });#}
-    {#    </script>#}
+    <a href="{% url 'add_assignment_task' %}" class="btn btn-primary mx-5 px-4">Add New Assignment</a>
 
 {% endblock %}
