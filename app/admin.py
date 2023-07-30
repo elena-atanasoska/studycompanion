@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin, GroupAdmin
 from django.contrib.auth.models import Group
-from .models import CustomUser, Assignment, Course, Task
+from .models import CustomUser, Assignment, Course, Task, Reminder
 from django.forms import BaseInlineFormSet
 from django import forms
 
@@ -67,3 +67,13 @@ class AssignmentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Assignment, AssignmentAdmin)
+
+
+class ReminderAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description', 'course', 'deadline')
+    list_filter = ('course', 'deadline')
+    search_fields = ('name', 'description')
+    ordering = ('deadline',)
+
+
+admin.site.register(Reminder, ReminderAdmin)
