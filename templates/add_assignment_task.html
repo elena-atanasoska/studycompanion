@@ -11,13 +11,6 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <fieldset>
-            <legend>Tasks:</legend>
-            {{ task_formset.management_form }}
-            {% for task_form in task_formset %}
-                {{ task_form.as_p }}
-            {% endfor %}
-        </fieldset>
         <input type="submit" value="Save">
     </form>
 {% endblock %}

@@ -15,6 +15,11 @@
             color: white;
         }
 
+        .navcolor-border {
+            border: 2px solid #4445a2; /* Replace #ff0000 with your desired border color in hexadecimal */
+        }
+
+
         .primary-text {
             color: #19217BFF;
         }
@@ -71,6 +76,13 @@
     {% block content %}
     {% endblock %}
 </div>
+
+<footer class="navcolor text-white text-center py-4 mt-5">
+    <div class="container">
+        <p>&copy; {{ year }} Study Companion. All rights reserved.</p>
+        <p>Designed with <i class="fas fa-heart text-danger"></i> by Elena, Bojana and Iva</p>
+    </div>
+</footer>
 
 <!-- Include Bootstrap JS and any other scripts if needed -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
