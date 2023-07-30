@@ -7,10 +7,14 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Add New Assignment and Task</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
-    </form>
+    <div class="container" style="max-width: 600px">
+        <h1 class="text-center primary-text mb-5">Add New Assignment and Task</h1>
+        <form method="post" style="max-width: 400px" class="mx-auto">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save" class="btn btn-primary mt-2">
+        </form>
+    </div>
 {% endblock %}
+
+
