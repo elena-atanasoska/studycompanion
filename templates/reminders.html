@@ -17,6 +17,9 @@
                             <h5 class="card-title">{{ reminder.description }}</h5>
                             <p class="card-text">{{ reminder.course }}</p>
                             <p class="card-text">{{ reminder.deadline }}</p>
+                            <div class="text-right">
+                                <a href="{% url 'reminder_details' name=reminder.name %}" class="btn btn-link">See more</a>
+                            </div>
                             {#<a href="#" class="btn btn-primary">Go somewhere</a>#}
                         </div>
                     </div>
@@ -26,10 +29,6 @@
     </div>
 
 
-    <a href="{% url 'add_reminder' %}" class="btn btn-primary mx-5 px-4">Add reminder</a>{#    <script>#}
-    {#    document.getElementById('newAssignmentButton').addEventListener('click', function () {#}
-    {#        window.location.href = "{% url 'add_assignment' %}";#}
-    {#    });#}
-    {#    </script>#}
+    <a href="{% url 'add_reminder' %}" class="btn btn-primary mx-5 px-4">Add reminder</a>
 
 {% endblock %}

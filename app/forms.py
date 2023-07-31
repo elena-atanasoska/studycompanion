@@ -18,6 +18,8 @@ class CustomAuthenticationForm(AuthenticationForm):
 
 
 class AssignmentTaskForm(forms.ModelForm):
+    task_name = forms.CharField(max_length=200)
+    is_finished = forms.BooleanField(required=False, widget=forms.CheckboxInput)
     def __init__(self, *args, **kwargs):
         super(AssignmentTaskForm, self).__init__(*args, **kwargs)
         for field in self.visible_fields():
@@ -25,9 +27,6 @@ class AssignmentTaskForm(forms.ModelForm):
     class Meta:
         model = Assignment
         fields = '__all__'
-
-    task_name = forms.CharField(max_length=200)
-    is_finished = forms.BooleanField(required=False)
 
     def as_bootstrap(self):
         for name, field in self.fields.items():
@@ -52,4 +51,9 @@ class ReminderForm(forms.ModelForm):
         'course': forms.Select(attrs={'class': 'form-control'}),
         'deadline': forms.DateTimeInput(attrs={'class': 'form-control datetimepicker'}),
     }
+
+    def __init__(self, *args, **kwargs):
+        super(ReminderForm, self).__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs["class"] = "form-control"
 
