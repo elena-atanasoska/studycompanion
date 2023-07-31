@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout as auth_logout
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, AssignmentTaskForm, ReminderForm
 
@@ -123,3 +123,29 @@ def delete_reminder(request, name):
         reminder.delete()
         return redirect('reminders')
     return render(request, 'delete_reminder.html', {'reminder': reminder})
+
+def edit_reminder(request, name=None):
+    reminder = Reminder.objects.get(name=name)
+
+    if request.method == 'POST':
+        form = ReminderForm(request.POST, instance=reminder)
+        if form.is_valid():
+            form.save()
+            return redirect('reminders')
+    else:
+        form = ReminderForm(instance=reminder)
+
+    return render(request, 'edit_reminder.html', {'form': form, 'reminder': reminder})
+
+def edit_assignment(request, name=None):
+    assignment = Assignment.objects.get(name=name)
+
+    if request.method == 'POST':
+        form = AssignmentTaskForm(request.POST, instance=assignment)
+        if form.is_valid():
+            form.save()
+            return redirect('assignments')
+    else:
+        form = AssignmentTaskForm(instance=assignment)
+
+    return render(request, 'edit_assignment.html', {'form': form, 'assignment': assignment})

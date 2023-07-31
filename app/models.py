@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager, Group, User, PermissionsMixin
 from django.db import models
 from datetime import datetime, timedelta
+from django.utils import timezone
 
 
 class CustomUserManager(BaseUserManager):
@@ -93,4 +94,15 @@ class Reminder(models.Model):
 
     def __str__(self):
         return self.name
+
+    def time_remaining(self):
+        now = timezone.now()
+        remaining = self.deadline - now
+        days = remaining.days
+        hours, remainder = divmod(remaining.seconds, 3600)
+
+        if hours == 0:
+            return f"{days} days"
+        else:
+            return f"{days} days, {hours} hours"
 

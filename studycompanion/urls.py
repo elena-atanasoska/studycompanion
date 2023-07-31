@@ -36,4 +36,6 @@ urlpatterns = [
     path('reminders/add', views.add_reminder, name='add_reminder'),
     path('reminder/details/<str:name>', views.reminder_details, name='reminder_details'),
     path('delete_reminder/<str:name>', views.delete_reminder, name='delete_reminder'),
+    path('edit_reminder/<str:name>', views.edit_reminder, name='edit_reminder'),
+    path('edit_assignment/<str:name>', views.edit_assignment, name='edit_assignment'),
 ]
