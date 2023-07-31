@@ -7,13 +7,23 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container" style="max-width: 600px">
-        <h1 class="text-center primary-text mb-5">Add New Assignment and Task</h1>
-        <form method="post" style="max-width: 400px" class="mx-auto">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Save" class="btn btn-primary mt-2">
-        </form>
+    <div class="container">
+    <a href="{% url 'assignments' %}" class="btn btn-outline-secondary">Go Back</a>
+        <div class="mx-auto" style="max-width: 600px">
+            <h1 class="text-center primary-text mb-5">Add New Assignment and Task</h1>
+            <form method="post" style="max-width: 400px" class="mx-auto">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="row">
+                    <div class="col-md-6 text-left">
+                    <a href="{% url 'assignments' %}" class="btn btn-secondary mt-2">Cancel</a>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <input type="submit" value="Save" class="btn btn-primary mt-2">
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}
 

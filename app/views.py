@@ -105,9 +105,21 @@ def add_reminder(request):
         form = ReminderForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('reminder_list')  # Replace 'reminder_list' with the URL name for your reminder list view
+            return redirect('reminders')  # Replace 'reminder_list' with the URL name for your reminder list view
     else:
         form = ReminderForm()
 
     return render(request, 'add_reminder.html', {'form': form})
 
+def reminder_details(request, name):
+    reminder = Reminder.objects.get(name=name)
+    context = {"reminder":reminder}
+    return render(request, "reminder_details.html", context=context)
+
+
+def delete_reminder(request, name):
+    reminder = Reminder.objects.get(name=name)
+    if request.method == 'POST':
+        reminder.delete()
+        return redirect('reminders')
+    return render(request, 'delete_reminder.html', {'reminder': reminder})
