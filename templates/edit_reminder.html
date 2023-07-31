@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Reminder
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <a href="{% url 'reminders' %}" class="btn btn-outline-secondary">Go Back</a>
+        <h1 class="text-center primary-text my-5">Edit Reminder</h1>
+        <form method="post" style="max-width: 400px" class="mx-auto">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-right">
+                <input type="submit" value="Save" class="btn btn-primary mt-2">
+            </div>
+        </form>
+    </div>
+{% endblock %}

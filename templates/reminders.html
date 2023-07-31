@@ -17,10 +17,10 @@
                             <h5 class="card-title">{{ reminder.description }}</h5>
                             <p class="card-text">{{ reminder.course }}</p>
                             <p class="card-text">{{ reminder.deadline }}</p>
-                            <div class="text-right">
-                                <a href="{% url 'reminder_details' name=reminder.name %}" class="btn btn-link">See more</a>
-                            </div>
-                            {#<a href="#" class="btn btn-primary">Go somewhere</a>#}
+                            <p class="card-text" style="color: #FDC642">Time remaining: {{ reminder.time_remaining }}</p>
+                                <div class="text-right ml-auto">
+                                    <a href="{% url 'reminder_details' name=reminder.name %}" class="btn btn-link">See more</a>
+                                </div>
                         </div>
                     </div>
                 </div>
