@@ -2,10 +2,10 @@ from datetime import datetime, timedelta
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout as auth_logout
-from .forms import CustomUserCreationForm, CustomAuthenticationForm, AssignmentTaskForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, AssignmentTaskForm, ReminderForm
 
 # Create your views here.
-from app.models import Comment, Assignment, Task
+from app.models import Comment, Assignment, Task, Reminder
 
 
 def your_view(request):
@@ -78,8 +78,10 @@ def add_assignment_task(request):
 def about(request):
     return render(request, 'about.html')
 
+
 def contact(request):
     return render(request, 'contact.html')
+
 
 def assignment_details(request, name):
     assignment = Assignment.objects.get(name=name)
@@ -92,3 +94,20 @@ def delete_assignment(request, name):
         assignment.delete()
         return redirect('assignments')
     return render(request, 'delete_assignment.html', {'assignment': assignment})
+
+def reminders_all(request):
+    reminders = Reminder.objects.all()
+    return render(request, 'reminders.html', {'reminders': reminders})
+
+
+def add_reminder(request):
+    if request.method == 'POST':
+        form = ReminderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('reminder_list')  # Replace 'reminder_list' with the URL name for your reminder list view
+    else:
+        form = ReminderForm()
+
+    return render(request, 'add_reminder.html', {'form': form})
+

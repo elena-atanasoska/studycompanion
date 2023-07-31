@@ -83,3 +83,14 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Reminder(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.CharField(max_length=500)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    deadline = models.DateTimeField(default=datetime.now() + timedelta(days=7))
+
+    def __str__(self):
+        return self.name
+
