@@ -83,6 +83,18 @@ def contact(request):
     return render(request, 'contact.html')
 
 
+def assignment_details(request, name):
+    assignment = Assignment.objects.get(name=name)
+    context = {"assignment":assignment}
+    return render(request, "assignment_details.html", context=context)
+
+def delete_assignment(request, name):
+    assignment = Assignment.objects.get(name=name)
+    if request.method == 'POST':
+        assignment.delete()
+        return redirect('assignments')
+    return render(request, 'delete_assignment.html', {'assignment': assignment})
+
 def reminders_all(request):
     reminders = Reminder.objects.all()
     return render(request, 'reminders.html', {'reminders': reminders})

@@ -30,6 +30,8 @@ urlpatterns = [
     path('assignments/add/', views.add_assignment_task, name='add_assignment_task'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+    path('assignments/details/<str:name>', views.assignment_details, name='assignment_details'),
+    path('delete_assignment/<str:name>', views.delete_assignment, name='delete_assignment'),
     path('reminders/', views.reminders_all, name='reminders'),
-    path('reminders/add', views.add_reminder, name='add_reminder')
+    path('reminders/add', views.add_reminder, name='add_reminder'),
 ]
