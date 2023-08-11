@@ -38,4 +38,6 @@ urlpatterns = [
     path('delete_reminder/<str:name>', views.delete_reminder, name='delete_reminder'),
     path('edit_reminder/<str:name>', views.edit_reminder, name='edit_reminder'),
     path('edit_assignment/<str:name>', views.edit_assignment, name='edit_assignment'),
+    path('group_study/', views.group_study, name='group_study'),
+    path('ask_question/', views.ask_question, name='ask_question')
 ]

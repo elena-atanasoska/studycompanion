@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import modelformset_factory
 
-from .models import CustomUser, Assignment, Task, Reminder
+from .models import CustomUser, Assignment, Task, Reminder, Question
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -57,3 +57,13 @@ class ReminderForm(forms.ModelForm):
         for field in self.visible_fields():
             field.field.widget.attrs["class"] = "form-control"
 
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['title', 'course', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs["class"] = "form-control"

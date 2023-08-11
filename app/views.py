@@ -2,10 +2,10 @@ from datetime import datetime, timedelta
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout as auth_logout
-from .forms import CustomUserCreationForm, CustomAuthenticationForm, AssignmentTaskForm, ReminderForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, AssignmentTaskForm, ReminderForm, QuestionForm
 
 # Create your views here.
-from app.models import Comment, Assignment, Task, Reminder
+from app.models import Comment, Assignment, Task, Reminder, Question
 
 
 def your_view(request):
@@ -149,3 +149,21 @@ def edit_assignment(request, name=None):
         form = AssignmentTaskForm(instance=assignment)
 
     return render(request, 'edit_assignment.html', {'form': form, 'assignment': assignment})
+
+
+def group_study(request):
+    questions = Question.objects.all()
+    return render(request, 'group_study.html', {'questions': questions})
+
+def ask_question(request):
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.user = request.user
+            question.save()
+            return redirect('group_study')  # Redirect to the group study page after asking a question
+    else:
+        form = QuestionForm()
+
+    return render(request, 'ask_question.html', {'form': form})

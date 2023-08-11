@@ -35,7 +35,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return f"{self.username} - {self.name} {self.surname}"
+        return f"{self.name} {self.surname}"
 
 
 class Comment(models.Model):
@@ -106,3 +106,11 @@ class Reminder(models.Model):
         else:
             return f"{days} days, {hours} hours"
 
+class Question(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
