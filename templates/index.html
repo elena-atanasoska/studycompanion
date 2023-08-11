@@ -22,9 +22,9 @@
                                 <h5 class="card-title">{{ assignment.course }}</h5>
                                 <p class="card-text">Due Date: {{ assignment.due_date }}</p>
                                 <p class="card-text">{{ assignment.description }}</p>
-{#                                <div class="text-right">#}
-{#                                    <a href="{% url 'assignment_details' name=assignment.name %}" class="btn btn-link">See more</a>#}
-{#                                </div>#}
+                                {#                                <div class="text-right">#}
+                                {#                                    <a href="{% url 'assignment_details' name=assignment.name %}" class="btn btn-link">See more</a>#}
+                                {#                                </div>#}
                                 {# see more ako treba da se stavi #}
                                 {#<a href="#" class="btn btn-danger">Go somewhere</a>#}
                             </div>
@@ -35,8 +35,6 @@
         </div>
     {% else %}
 
-
-
         <div class="text-center my-5">
             <h1 class="primary-text"> Your ultimate all-in-one study companion! </h1>
             <h2 class="text-warning"> Elevate your learning experience. </h2>
@@ -45,30 +43,77 @@
         <!-- Updated code with card layout -->
         <div class="mx-5 px-4">
             <div class="row">
-                {% for comment in comments %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <!-- Add the image here, or set a default image URL if available -->
-                                    <img src="" class="img-fluid rounded-start"
-                                         alt="User Image">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ comment.user.first_name }}</h5>
-                                        <p class="card-text">{{ comment.description }}</p>
-                                        <p class="card-text">
-                                            {% for i in comment.stars %}
-                                                <i class="fas fa-star"></i>
-                                            {% endfor %}
-                                        </p>
-                                    </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                         <div class="row g-0 align-items-center">
+                            <div class="col-md-4">
+                                <img src="static/user.png" class="img-fluid rounded-start"
+                                     alt="User Image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Iva D.</h5>
+                                    <p class="card-text">I recently came across this fantastic study companion
+                                        website that has truly transformed the way I approach my studies. The site
+                                        is incredibly user-friendly and offers a wealth of resources that have
+                                        helped me to stay on top of my coursework.</p>
+                                    <p class="card-text">
+                                        {% for _ in "12345" %}
+                                            <i class="fas fa-star"></i>
+                                        {% endfor %}
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                         <div class="row g-0 align-items-center">
+                            <div class="col-md-4">
+                                <img src="static/user.png" class="img-fluid rounded-start"
+                                     alt="User Image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Bojana M.</h5>
+                                    <p class="card-text">The resources available are top-notch, the site is easy to
+                                        navigate, and the personalized features have truly helped me to succeed in my
+                                        studies. If you're looking for a reliable study companion, this website is
+                                        definitely worth checking out!</p>
+                                    <p class="card-text">
+                                        {% for _ in "12345" %}
+                                            <i class="fas fa-star"></i>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                         <div class="row g-0 align-items-center">
+                            <div class="col-md-4">
+                                <img src="static/user.png" class="img-fluid rounded-start"
+                                     alt="User Image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Elena A.</h5>
+                                    <p class="card-text">A great feature of this website is the ability to customize my
+                                        study plan. I can easily create study schedules and set reminders for important
+                                        deadlines, which has helped me to stay organized and focused on my goals.</p>
+                                    <p class="card-text">
+                                        {% for _ in "1234" %}
+                                            <i class="fas fa-star"></i>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

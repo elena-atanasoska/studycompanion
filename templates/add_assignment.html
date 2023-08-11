@@ -7,17 +7,22 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Add New Assignment and Task</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <fieldset>
-            <legend>Tasks:</legend>
-            {{ task_formset.management_form }}
-            {% for task_form in task_formset %}
-                {{ task_form.as_p }}
-            {% endfor %}
-        </fieldset>
-        <input type="submit" value="Save">
-    </form>
+    {% if user.is_authenticated %}
+        <h1>Add New Assignment and Task</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <fieldset>
+                <legend>Tasks:</legend>
+                {{ task_formset.management_form }}
+                {% for task_form in task_formset %}
+                    {{ task_form.as_p }}
+                {% endfor %}
+            </fieldset>
+            <input type="submit" value="Save">
+        </form>
+
+    {% else %}
+        {% include "unauthenticated_message.html" %}
+    {% endif %}
 {% endblock %}

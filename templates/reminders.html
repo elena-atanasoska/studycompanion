@@ -1,34 +1,39 @@
-
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="text-center my-5">
-        <h1 class="primary-text"> My Reminders </h1>
-    </div>
 
-    <!-- Updated code with card layout -->
-    <div class="mx-5 px-4">
-        <div class="row">
-            {% for reminder in reminders %}
-                <div class="col-md-4 mb-4">
-                    <div class="card navcolor-border">
-                        <h4 class="card-header navcolor text-white">{{ reminder.name }}</h4>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ reminder.description }}</h5>
-                            <p class="card-text">{{ reminder.course }}</p>
-                            <p class="card-text">{{ reminder.deadline }}</p>
-                            <div class="text-right">
-                                <a href="{% url 'reminder_details' name=reminder.name %}" class="btn btn-link">See more</a>
+    {% if user.is_authenticated %}
+
+        <div class="text-center my-5">
+            <h1 class="primary-text"> My Reminders </h1>
+        </div>
+
+        <!-- Updated code with card layout -->
+        <div class="mx-5 px-4">
+            <div class="row">
+                {% for reminder in reminders %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card navcolor-border">
+                            <h4 class="card-header navcolor text-white">{{ reminder.name }}</h4>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ reminder.description }}</h5>
+                                <p class="card-text">{{ reminder.course }}</p>
+                                <p class="card-text">{{ reminder.deadline }}</p>
+                                <div class="text-right">
+                                    <a href="{% url 'reminder_details' name=reminder.name %}" class="btn btn-link">See
+                                        more</a>
+                                </div>
+                                {#<a href="#" class="btn btn-primary">Go somewhere</a>#}
                             </div>
-                            {#<a href="#" class="btn btn-primary">Go somewhere</a>#}
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
 
+        <a href="{% url 'add_reminder' %}" class="btn btn-primary mx-5 px-4">Add reminder</a>
 
-    <a href="{% url 'add_reminder' %}" class="btn btn-primary mx-5 px-4">Add reminder</a>
-
+    {% else %}
+        {% include "unauthenticated_message.html" %}
+    {% endif %}
 {% endblock %}

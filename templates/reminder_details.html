@@ -5,23 +5,26 @@
 {% endblock %}
 
 {% block content %}
+    {% if user.is_authenticated %}
 
-    <div class="container">
-        <a href="{% url 'reminders' %}" class="btn btn-outline-secondary">Go Back</a>
-        <div class="card border-dark mb-3 mx-auto" style="max-width: 700px">
-              <div class="card-header">
+        <div class="container">
+            <a href="{% url 'reminders' %}" class="btn btn-outline-secondary">Go Back</a>
+            <div class="card border-dark mb-3 mx-auto" style="max-width: 700px">
+                <div class="card-header">
                     <h3 class="card-title text-dark">{{ reminder.name }}</h3>
-              </div>
-              <div class="card-body">
-                <p class="card-text">Description of your reminder: {{ reminder.description }}</p>
-                <p class="card-text">Course:{{ reminder.course }}</p>
-                <p class="card-text">Deadline: {{ reminder.deadline }}</p>
-                  <div class="text-right">
-                      <a href="{% url 'delete_reminder' name=reminder.name %}" class="btn btn-danger">Delete</a>
-                  </div>
-              </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Description of your reminder: {{ reminder.description }}</p>
+                    <p class="card-text">Course:{{ reminder.course }}</p>
+                    <p class="card-text">Deadline: {{ reminder.deadline }}</p>
+                    <div class="text-right">
+                        <a href="{% url 'delete_reminder' name=reminder.name %}" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-    </div>
-
+    {% else %}
+        {% include "unauthenticated_message.html" %}
+    {% endif %}
 {% endblock %}
