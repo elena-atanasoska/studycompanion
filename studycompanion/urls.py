@@ -39,5 +39,7 @@ urlpatterns = [
     path('edit_reminder/<str:name>', views.edit_reminder, name='edit_reminder'),
     path('edit_assignment/<str:name>', views.edit_assignment, name='edit_assignment'),
     path('group_study/', views.group_study, name='group_study'),
-    path('ask_question/', views.ask_question, name='ask_question')
+    path('ask_question/', views.ask_question, name='ask_question'),
+    path('reminder_details/<str:name>/<str:source>/', views.reminder_details, name='reminder_details'),
+    path('assignment_details/<str:name>/<str:source>/', views.assignment_details, name='assignment_details'),
 ]

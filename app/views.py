@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta
-
+from django.db.models import F, ExpressionWrapper
+from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout as auth_logout
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, AssignmentTaskForm, ReminderForm, QuestionForm
+from urllib.parse import urlparse
 
 # Create your views here.
 from app.models import Comment, Assignment, Task, Reminder, Question
@@ -11,9 +13,17 @@ from app.models import Comment, Assignment, Task, Reminder, Question
 def your_view(request):
     comments = Comment.objects.all()
     current_date = datetime.now().date()
+    current_datetime = timezone.now()
     end_date_limit = current_date + timedelta(days=5)
     assignments = Assignment.objects.filter(due_date__lte=end_date_limit)
-    return render(request, 'index.html', {'comments': comments, 'user': request.user, 'assignments': assignments})
+    active_reminders = Reminder.objects.filter(deadline__gt=current_datetime)
+
+    nearest_reminder = active_reminders.order_by('deadline').first() if active_reminders.exists() else None
+    assignment_least_progress = assignments.order_by('progress').first() if assignments.exists() else None
+    assignment_most_progress = assignments.order_by('-progress').first() if assignments.exists() else None
+
+    return render(request, 'index.html', {'comments': comments, 'user': request.user, 'assignments': assignments, 'nearest_reminder':nearest_reminder,  'assignment_least_progress': assignment_least_progress,
+        'assignment_most_progress': assignment_most_progress,})
 
 
 def user_logout(request):
@@ -85,7 +95,13 @@ def contact(request):
 
 def assignment_details(request, name):
     assignment = Assignment.objects.get(name=name)
-    context = {"assignment":assignment}
+    source = None
+    referer = request.META.get('HTTP_REFERER')
+    if referer:
+        parsed_url = urlparse(referer)
+        source = parsed_url.path
+
+    context = {"assignment": assignment, "source": source}
     return render(request, "assignment_details.html", context=context)
 
 def delete_assignment(request, name):
@@ -113,7 +129,13 @@ def add_reminder(request):
 
 def reminder_details(request, name):
     reminder = Reminder.objects.get(name=name)
-    context = {"reminder":reminder}
+    source = None
+    referer = request.META.get('HTTP_REFERER')
+    if referer:
+        parsed_url = urlparse(referer)
+        source = parsed_url.path
+
+    context = {"reminder": reminder, "source": source}
     return render(request, "reminder_details.html", context=context)
 
 

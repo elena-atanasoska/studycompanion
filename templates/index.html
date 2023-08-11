@@ -12,27 +12,153 @@
             <h2 class="text-warning"> Today you need to work on: </h2>
         </div>
 
-        <div class="mx-5 px-4">
+
+{#        <div class="container">#}
+{##}
+{#            <div class="row">#}
+{#            <div class="col-md-6">#}
+{#                <p>You have done most progress on:</p>#}
+{#                <div class="card border-success mb-3" style="max-width: 18rem;">#}
+{#                  <div class="card-body">#}
+{#                    <h5 class="card-title text-success">{{ assignment_most_progress.name }}</h5>#}
+{#                      <p class="card-text"><i>Course:</i> {{ assignment_most_progress.course }}</p>#}
+{#                      <p class="card-text"><i>Progress:</i> {{ assignment_most_progress.progress }}</p>#}
+{#                      <p class="card-text">{{ assignment_most_progress.description }}</p>#}
+{#                      <div class="text-right">#}
+{#                          <a href="{% url 'assignment_details' name=assignment_most_progress.name %}" class="btn btn-outline-success">See assignment</a>#}
+{#                      </div>#}
+{#                  </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-md-6">#}
+{#                <p>You have done the least progress on:</p>#}
+{#                <div class="card border-warning mb-3" style="max-width: 18rem;">#}
+{#                  <div class="card-body">#}
+{#                    <h5 class="card-title text-warning">{{ assignment_least_progress.name }}</h5>#}
+{#                      <p class="card-text"><i>Course:</i> {{ assignment_least_progress.course }}</p>#}
+{#                      <p class="card-text"><i>Progress:</i> {{ assignment_least_progress.progress }}</p>#}
+{#                      <p class="card-text">{{ assignment_least_progress.description }}</p>#}
+{#                      <div class="text-right">#}
+{#                          <a href="{% url 'assignment_details' name=assignment_least_progress.name %}" class="btn btn-outline-warning">See assignment</a>#}
+{#                      </div>#}
+{#                  </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="row">#}
+{#            <div class="col-md-6">#}
+{#                    <div class="alert alert-warning" role="alert" style="max-width: 350px">#}
+{#                        Warning! You have an upcoming reminder!#}
+{#                    </div>#}
+{#                    <div class="card border-danger" style="width: 18rem;">#}
+{#                        <div class="card-body">#}
+{#                            <h5 class="card-title">{{ nearest_reminder.name }}</h5>#}
+{#                            <p class="card-text"><i>Course:</i> {{ nearest_reminder.course }}</p>#}
+{#                            <p class="card-text">{{ nearest_reminder.description }}</p>#}
+{#                            <p class="card-text" style="color: #ff001b"><b>Time remaining:</b> {{ nearest_reminder.time_remaining }}</p>#}
+{#                            <div class="text-right">#}
+{#                                <a href="{% url 'reminder_details' name=nearest_reminder.name %}" class="btn btn-outline-danger">See reminder</a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#        </div>#}
+{##}
+{#        </div>#}
+
+        <div class="container">
             <div class="row">
-                {% for assignment in assignments %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-danger">
-                            <h4 class="card-header bg-light text-danger">{{ assignment.name }}</h4>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ assignment.course }}</h5>
-                                <p class="card-text">Due Date: {{ assignment.due_date }}</p>
-                                <p class="card-text">{{ assignment.description }}</p>
-{#                                <div class="text-right">#}
-{#                                    <a href="{% url 'assignment_details' name=assignment.name %}" class="btn btn-link">See more</a>#}
-{#                                </div>#}
-                                {# see more ako treba da se stavi #}
-                                {#<a href="#" class="btn btn-danger">Go somewhere</a>#}
+                <div class="col-md-6 mb-4">
+                    <div class="mb-2">
+                        <p class="h5 text-success">You have done the most progress on:</p>
+                    </div>
+                    <div class="card border-success">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">{{ assignment_most_progress.name }}</h5>
+                            <p class="card-text"><i>Course:</i> {{ assignment_most_progress.course }}</p>
+                            <p class="card-text"><i>Progress:</i> {{ assignment_most_progress.progress }}</p>
+                            <p class="card-text">{{ assignment_most_progress.description }}</p>
+                            <div class="text-right">
+                                <a href="{% url 'assignment_details' name=assignment_most_progress.name %}" class="btn btn-outline-success">See assignment</a>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="mb-2">
+                        <p class="h5 text-warning">You have done the least progress on:</p>
+                    </div>
+                    <div class="card border-warning">
+                        <div class="card-body">
+                            <h5 class="card-title text-warning">{{ assignment_least_progress.name }}</h5>
+                            <p class="card-text"><i>Course:</i> {{ assignment_least_progress.course }}</p>
+                            <p class="card-text"><i>Progress:</i> {{ assignment_least_progress.progress }}</p>
+                            <p class="card-text">{{ assignment_least_progress.description }}</p>
+                            <div class="text-right">
+                                <a href="{% url 'assignment_details' name=assignment_least_progress.name %}" class="btn btn-outline-warning">See assignment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-md-6">
+                    <div class="alert alert-warning" role="alert" style="max-width: 350px">
+                        Warning! You have an upcoming reminder!
+                    </div>
+                    <div class="card border-danger" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ nearest_reminder.name }}</h5>
+                            <p class="card-text"><i>Course:</i> {{ nearest_reminder.course }}</p>
+                            <p class="card-text">{{ nearest_reminder.description }}</p>
+                            <p class="card-text" style="color: #ff001b"><b>Time remaining:</b> {{ nearest_reminder.time_remaining }}</p>
+                            <div class="text-right">
+                                <a href="{% url 'reminder_details' name=nearest_reminder.name %}" class="btn btn-outline-danger">See reminder</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="row mt-4">
+            <p class="h2 text-info">You might like:</p>
+            <div class="col-md-4 d-flex">
+                <div class="card flex-fill" style="width: 18rem;">
+                    <img src="https://media.wired.com/photos/5f5fea5e8595a16063bbc49a/master/w_1280%2Cc_limit/Gear-ObVus-Solutions-Tower-Stand-side-by-side-SOURCE-ObVus-Solutions.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">The Best Laptop Stands to Save Your Neck</h5>
+                        <p class="card-text">Raising your computer screen is a simple fix for healthier posture.</p>
+                        <a href="https://www.wired.com/gallery/best-laptop-stands/" class="btn btn-primary">Read full article</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex">
+                <div class="card flex-fill" style="width: 18rem;">
+                    <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/13039/production/_130718877_gettyimages-1466716029.jpg.webp" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Prototype 'Brain-like' chip promises greener AI</h5>
+                        <p class="card-text">Concerns have been raised about emissions associated with warehouses full of computers powering AI systems. IBM said its prototype could lead to more efficient, less battery draining AI chips for smartphones.</p>
+                        <a href="https://www.bbc.com/news/technology-66465230" class="btn btn-primary">Read full article</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex">
+                <div class="card flex-fill" style="width: 18rem;">
+                    <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/0A81/production/_130698620_mediaitem130698619.jpg.webp" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">How safe is my data after a hack or leak?</h5>
+                        <p class="card-text">The UK's elections watchdog revealed on Tuesday it had been the victim of a "complex cyber-attack" potentially affecting millions of voters.
+                            It also emerged personal details of police officers in Northern Ireland were published accidentally.</p>
+                        <a href="https://www.bbc.com/news/technology-66451970" class="btn btn-primary">Read full article</a>
+                    </div>
+                </div>
             </div>
         </div>
+
+    </div>
+
+
     {% else %}
 
 

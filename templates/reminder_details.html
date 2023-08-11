@@ -7,7 +7,7 @@
 {% block content %}
 
     <div class="container">
-        <a href="{% url 'reminders' %}" class="btn btn-outline-secondary">Go Back</a>
+        <a href="{% if source == '/' %}{% url 'home' %}{% else %}{% url 'reminders' %}{% endif %}" class="btn btn-outline-secondary">Go Back</a>
         <div class="card border-dark mb-3 mx-auto" style="max-width: 700px">
               <div class="card-header">
                     <h3 class="card-title text-dark">{{ reminder.name }}</h3>

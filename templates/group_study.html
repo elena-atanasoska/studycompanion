@@ -17,7 +17,7 @@
                 <div class="row g-0">
                     <div class="col-md-4">
 {#                        <img src="{% static 'path/to/your/image.png' %}" class="img-fluid rounded-start" alt="...">#}
-                        <p class="card-text primary-text">{{ question.user }} </p>
+                        <p class="card-text primary-text ml-2">{{ question.user }} </p>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -34,8 +34,8 @@
 
     </div>
 
-    <div class="mt-4">
-            <a href="{% url 'ask_question' %}" class="btn btn-primary">Ask a New Question</a>
+    <div class="row text-center mx-auto" style="max-width: 300px">
+        <a href="{% url 'ask_question' %}" class="btn btn-primary mx-5 px-4 mt-2">Ask a New Question</a>
     </div>
 
 </div>
