@@ -95,14 +95,23 @@ class Reminder(models.Model):
     def __str__(self):
         return self.name
 
+    @property
     def time_remaining(self):
         now = timezone.now()
         remaining = self.deadline - now
-        days = remaining.days
-        hours, remainder = divmod(remaining.seconds, 3600)
 
-        if hours == 0:
-            return f"{days} days"
+        if remaining.total_seconds() <= 0:
+            return "Reminder Expired"
         else:
-            return f"{days} days, {hours} hours"
+            days = remaining.days
+            hours, seconds = divmod(remaining.seconds, 3600)
+            minutes, _ = divmod(seconds, 60)
+
+            if days == 0:
+                if hours == 0:
+                    return f"{minutes} minutes"
+                else:
+                    return f"{hours} hours and {minutes} minutes"
+            else:
+                return f"{days} days, {hours} hours, and {minutes} minutes"
 

@@ -80,12 +80,71 @@
     {% endblock %}
 </div>
 
-<footer class="navcolor text-white text-center py-4 mt-5">
-    <div class="container">
-        <p>&copy; {{ year }} Study Companion. All rights reserved.</p>
-        <p>Designed with <i class="fas fa-heart text-danger"></i> by Elena, Bojana and Iva</p>
+{#<footer class="navcolor text-white py-4 mt-5">#}
+{#    {% if user.is_authenticated %}#}
+{#        <div class="container text-center">#}
+{#            <div class="row">#}
+{#                <div class="col-md-6 mx-auto">#}
+{#                    <ul class="list-unstyled">#}
+{#                        <a class="nav-link" href="/about/">About Us</a>#}
+{#                    </ul>#}
+{#                </div>#}
+{#                <div class="col-md-6 mx-auto">#}
+{#                    <ul class="list-unstyled">#}
+{#                        <a class="nav-link" href="/contact/">Contact</a>#}
+{#                    </ul>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="container text-center">#}
+{#            <p>&copy; {{ year }} Study Companion. All rights reserved.</p>#}
+{#            <p>Designed with <i class="fas fa-heart text-danger"></i> by Elena, Bojana and Iva</p>#}
+{#        </div>#}
+{#    {% else %}#}
+{#        <div class="container text-center">#}
+{#            <p>&copy; {{ year }} Study Companion. All rights reserved.</p>#}
+{#            <p>Designed with <i class="fas fa-heart text-danger"></i> by Elena, Bojana and Iva</p>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#</footer>#}
+
+<footer class="navcolor text-white py-4 mt-5">
+    {% if user.is_authenticated  %}
+    <div class="container text-center">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <h5>About Us</h5>
+                <p>Learn more about our team and mission.</p>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="/about/" class="text-white">Read more</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h5>Contact</h5>
+                <p>Get in touch with us for any inquiries.</p>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="/contact/" class="text-white">Contact us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
+    <div class="container mt-4 text-center">
+        <p>&copy; {{ year }} Study Companion. All rights reserved.</p>
+        <p>Designed with <i class="fas fa-heart text-danger"></i> by Elena, Bojana, and Iva</p>
+    </div>
+    {% else %}
+        <div class="container mt-4 text-center">
+            <p>&copy; {{ year }} Study Companion. All rights reserved.</p>
+            <p>Designed with <i class="fas fa-heart text-danger"></i> by Elena, Bojana, and Iva</p>
+        </div>
+    {% endif %}
 </footer>
+
 
 <!-- Include Bootstrap JS and any other scripts if needed -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

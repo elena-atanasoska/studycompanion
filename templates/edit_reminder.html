@@ -6,7 +6,7 @@
 
 {% block content %}
     <div class="container">
-    <a href="{% url 'reminders' %}" class="btn btn-outline-secondary">Go Back</a>
+    <a href="{% url 'reminder_details' name=reminder.name %}" class="btn btn-outline-secondary">Go Back</a>
         <h1 class="text-center primary-text my-5">Edit Reminder</h1>
         <form method="post" style="max-width: 400px" class="mx-auto">
             {% csrf_token %}
