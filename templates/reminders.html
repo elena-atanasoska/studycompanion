@@ -7,20 +7,50 @@
     </div>
 
     <!-- Updated code with card layout -->
+{#    <div class="mx-5 px-4">#}
+{#        <div class="row">#}
+{#            {% for reminder in reminders %}#}
+{#                <div class="col-md-4 mb-4">#}
+{#                    <div class="card navcolor-border">#}
+{#                        <h4 class="card-header navcolor text-white">{{ reminder.name }}</h4>#}
+{#                        <div class="card-body">#}
+{#                            <h5 class="card-title">{{ reminder.description }}</h5>#}
+{#                            <p class="card-text">{{ reminder.course }}</p>#}
+{#                            <p class="card-text">{{ reminder.deadline }}</p>#}
+{#                            {% if reminder.time_remaining == "Reminder Expired" %}#}
+{#                                <p class="card-text" style="color: #ff001b"><b>Your reminder has expired</b></p>#}
+{#                            {% else %}#}
+{#                                <p class="card-text" style="color: #FDC642">Time remaining: {{ reminder.time_remaining }}</p>#}
+{#                            {% endif %}#}
+{#                                <div class="text-right ml-auto">#}
+{#                                    <a href="{% url 'reminder_details' name=reminder.name %}" class="btn btn-outline-success">See more</a>#}
+{#                                </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+
     <div class="mx-5 px-4">
         <div class="row">
             {% for reminder in reminders %}
                 <div class="col-md-4 mb-4">
-                    <div class="card navcolor-border">
-                        <h4 class="card-header navcolor text-white">{{ reminder.name }}</h4>
+                    <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">{{ reminder.description }}</h5>
+                            <h5 class="card-title">{{ reminder.name }}</h5>
+                            <p class="card-text">{{ reminder.description }}</p>
                             <p class="card-text">{{ reminder.course }}</p>
-                            <p class="card-text">{{ reminder.deadline }}</p>
-                            <p class="card-text" style="color: #FDC642">Time remaining: {{ reminder.time_remaining }}</p>
-                                <div class="text-right ml-auto">
-                                    <a href="{% url 'reminder_details' name=reminder.name %}" class="btn btn-link">See more</a>
-                                </div>
+                        </div>
+                        <div class="text-right ml-auto">
+                            <a href="{% url 'reminder_details' name=reminder.name %}" class="btn btn-outline-success mb-2 mr-2">See more</a>
+                        </div>
+                        <div class="card-footer">
+                            {% if reminder.time_remaining == "Reminder Expired" %}
+                                <small class="card-text" style="color: #ff001b"><b>Your reminder has expired</b></small>
+                            {% else %}
+                                <small class="card-text" style="color: #FDC642"><b>Time remaining: {{ reminder.time_remaining }}</b></small>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -28,7 +58,8 @@
         </div>
     </div>
 
-
-    <a href="{% url 'add_reminder' %}" class="btn btn-primary mx-5 px-4">Add reminder</a>
+    <div class="row text-center mx-auto" style="max-width: 300px">
+        <a href="{% url 'add_reminder' %}" class="btn btn-primary mx-5 px-4">Add New Reminder</a>
+    </div>
 
 {% endblock %}
