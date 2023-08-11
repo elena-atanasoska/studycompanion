@@ -115,6 +115,8 @@ class Reminder(models.Model):
             else:
                 return f"{days} days, {hours} hours, and {minutes} minutes"
 
+        time_remaining_text = property(time_remaining)
+
 class Question(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
