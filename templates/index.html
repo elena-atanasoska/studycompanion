@@ -13,59 +13,59 @@
         </div>
 
 
-{#        <div class="container">#}
-{##}
-{#            <div class="row">#}
-{#            <div class="col-md-6">#}
-{#                <p>You have done most progress on:</p>#}
-{#                <div class="card border-success mb-3" style="max-width: 18rem;">#}
-{#                  <div class="card-body">#}
-{#                    <h5 class="card-title text-success">{{ assignment_most_progress.name }}</h5>#}
-{#                      <p class="card-text"><i>Course:</i> {{ assignment_most_progress.course }}</p>#}
-{#                      <p class="card-text"><i>Progress:</i> {{ assignment_most_progress.progress }}</p>#}
-{#                      <p class="card-text">{{ assignment_most_progress.description }}</p>#}
-{#                      <div class="text-right">#}
-{#                          <a href="{% url 'assignment_details' name=assignment_most_progress.name %}" class="btn btn-outline-success">See assignment</a>#}
-{#                      </div>#}
-{#                  </div>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="col-md-6">#}
-{#                <p>You have done the least progress on:</p>#}
-{#                <div class="card border-warning mb-3" style="max-width: 18rem;">#}
-{#                  <div class="card-body">#}
-{#                    <h5 class="card-title text-warning">{{ assignment_least_progress.name }}</h5>#}
-{#                      <p class="card-text"><i>Course:</i> {{ assignment_least_progress.course }}</p>#}
-{#                      <p class="card-text"><i>Progress:</i> {{ assignment_least_progress.progress }}</p>#}
-{#                      <p class="card-text">{{ assignment_least_progress.description }}</p>#}
-{#                      <div class="text-right">#}
-{#                          <a href="{% url 'assignment_details' name=assignment_least_progress.name %}" class="btn btn-outline-warning">See assignment</a>#}
-{#                      </div>#}
-{#                  </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{##}
-{#        <div class="row">#}
-{#            <div class="col-md-6">#}
-{#                    <div class="alert alert-warning" role="alert" style="max-width: 350px">#}
-{#                        Warning! You have an upcoming reminder!#}
-{#                    </div>#}
-{#                    <div class="card border-danger" style="width: 18rem;">#}
-{#                        <div class="card-body">#}
-{#                            <h5 class="card-title">{{ nearest_reminder.name }}</h5>#}
-{#                            <p class="card-text"><i>Course:</i> {{ nearest_reminder.course }}</p>#}
-{#                            <p class="card-text">{{ nearest_reminder.description }}</p>#}
-{#                            <p class="card-text" style="color: #ff001b"><b>Time remaining:</b> {{ nearest_reminder.time_remaining }}</p>#}
-{#                            <div class="text-right">#}
-{#                                <a href="{% url 'reminder_details' name=nearest_reminder.name %}" class="btn btn-outline-danger">See reminder</a>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#        </div>#}
-{##}
-{#        </div>#}
+        {#        <div class="container">#}
+        {##}
+        {#            <div class="row">#}
+        {#            <div class="col-md-6">#}
+        {#                <p>You have done most progress on:</p>#}
+        {#                <div class="card border-success mb-3" style="max-width: 18rem;">#}
+        {#                  <div class="card-body">#}
+        {#                    <h5 class="card-title text-success">{{ assignment_most_progress.name }}</h5>#}
+        {#                      <p class="card-text"><i>Course:</i> {{ assignment_most_progress.course }}</p>#}
+        {#                      <p class="card-text"><i>Progress:</i> {{ assignment_most_progress.progress }}</p>#}
+        {#                      <p class="card-text">{{ assignment_most_progress.description }}</p>#}
+        {#                      <div class="text-right">#}
+        {#                          <a href="{% url 'assignment_details' name=assignment_most_progress.name %}" class="btn btn-outline-success">See assignment</a>#}
+        {#                      </div>#}
+        {#                  </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <div class="col-md-6">#}
+        {#                <p>You have done the least progress on:</p>#}
+        {#                <div class="card border-warning mb-3" style="max-width: 18rem;">#}
+        {#                  <div class="card-body">#}
+        {#                    <h5 class="card-title text-warning">{{ assignment_least_progress.name }}</h5>#}
+        {#                      <p class="card-text"><i>Course:</i> {{ assignment_least_progress.course }}</p>#}
+        {#                      <p class="card-text"><i>Progress:</i> {{ assignment_least_progress.progress }}</p>#}
+        {#                      <p class="card-text">{{ assignment_least_progress.description }}</p>#}
+        {#                      <div class="text-right">#}
+        {#                          <a href="{% url 'assignment_details' name=assignment_least_progress.name %}" class="btn btn-outline-warning">See assignment</a>#}
+        {#                      </div>#}
+        {#                  </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+        {##}
+        {#        <div class="row">#}
+        {#            <div class="col-md-6">#}
+        {#                    <div class="alert alert-warning" role="alert" style="max-width: 350px">#}
+        {#                        Warning! You have an upcoming reminder!#}
+        {#                    </div>#}
+        {#                    <div class="card border-danger" style="width: 18rem;">#}
+        {#                        <div class="card-body">#}
+        {#                            <h5 class="card-title">{{ nearest_reminder.name }}</h5>#}
+        {#                            <p class="card-text"><i>Course:</i> {{ nearest_reminder.course }}</p>#}
+        {#                            <p class="card-text">{{ nearest_reminder.description }}</p>#}
+        {#                            <p class="card-text" style="color: #ff001b"><b>Time remaining:</b> {{ nearest_reminder.time_remaining }}</p>#}
+        {#                            <div class="text-right">#}
+        {#                                <a href="{% url 'reminder_details' name=nearest_reminder.name %}" class="btn btn-outline-danger">See reminder</a>#}
+        {#                            </div>#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#        </div>#}
+        {##}
+        {#        </div>#}
 
         <div class="container">
             <div class="row">
@@ -80,7 +80,8 @@
                             <p class="card-text"><i>Progress:</i> {{ assignment_most_progress.progress }}</p>
                             <p class="card-text">{{ assignment_most_progress.description }}</p>
                             <div class="text-right">
-                                <a href="{% url 'assignment_details' name=assignment_most_progress.name %}" class="btn btn-outline-success">See assignment</a>
+                                <a href="{% url 'assignment_details' name=assignment_most_progress.name %}"
+                                   class="btn btn-outline-success">See assignment</a>
                             </div>
                         </div>
                     </div>
@@ -96,7 +97,8 @@
                             <p class="card-text"><i>Progress:</i> {{ assignment_least_progress.progress }}</p>
                             <p class="card-text">{{ assignment_least_progress.description }}</p>
                             <div class="text-right">
-                                <a href="{% url 'assignment_details' name=assignment_least_progress.name %}" class="btn btn-outline-warning">See assignment</a>
+                                <a href="{% url 'assignment_details' name=assignment_least_progress.name %}"
+                                   class="btn btn-outline-warning">See assignment</a>
                             </div>
                         </div>
                     </div>
@@ -112,56 +114,64 @@
                             <h5 class="card-title">{{ nearest_reminder.name }}</h5>
                             <p class="card-text"><i>Course:</i> {{ nearest_reminder.course }}</p>
                             <p class="card-text">{{ nearest_reminder.description }}</p>
-                            <p class="card-text" style="color: #ff001b"><b>Time remaining:</b> {{ nearest_reminder.time_remaining }}</p>
+                            <p class="card-text" style="color: #ff001b"><b>Time
+                                remaining:</b> {{ nearest_reminder.time_remaining }}</p>
                             <div class="text-right">
-                                <a href="{% url 'reminder_details' name=nearest_reminder.name %}" class="btn btn-outline-danger">See reminder</a>
+                                <a href="{% url 'reminder_details' name=nearest_reminder.name %}"
+                                   class="btn btn-outline-danger">See reminder</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-        <div class="row mt-4">
-            <p class="h2 text-info">You might like:</p>
-            <div class="col-md-4 d-flex">
-                <div class="card flex-fill" style="width: 18rem;">
-                    <img src="https://media.wired.com/photos/5f5fea5e8595a16063bbc49a/master/w_1280%2Cc_limit/Gear-ObVus-Solutions-Tower-Stand-side-by-side-SOURCE-ObVus-Solutions.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">The Best Laptop Stands to Save Your Neck</h5>
-                        <p class="card-text">Raising your computer screen is a simple fix for healthier posture.</p>
-                        <a href="https://www.wired.com/gallery/best-laptop-stands/" class="btn btn-primary">Read full article</a>
+            <div class="row mt-4">
+                <p class="h2 text-info">You might like:</p>
+                <div class="col-md-4 d-flex">
+                    <div class="card flex-fill" style="width: 18rem;">
+                        <img src="https://media.wired.com/photos/5f5fea5e8595a16063bbc49a/master/w_1280%2Cc_limit/Gear-ObVus-Solutions-Tower-Stand-side-by-side-SOURCE-ObVus-Solutions.jpg"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">The Best Laptop Stands to Save Your Neck</h5>
+                            <p class="card-text">Raising your computer screen is a simple fix for healthier posture.</p>
+                            <a href="https://www.wired.com/gallery/best-laptop-stands/" class="btn btn-primary">Read
+                                full article</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 d-flex">
-                <div class="card flex-fill" style="width: 18rem;">
-                    <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/13039/production/_130718877_gettyimages-1466716029.jpg.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Prototype 'Brain-like' chip promises greener AI</h5>
-                        <p class="card-text">Concerns have been raised about emissions associated with warehouses full of computers powering AI systems. IBM said its prototype could lead to more efficient, less battery draining AI chips for smartphones.</p>
-                        <a href="https://www.bbc.com/news/technology-66465230" class="btn btn-primary">Read full article</a>
+                <div class="col-md-4 d-flex">
+                    <div class="card flex-fill" style="width: 18rem;">
+                        <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/13039/production/_130718877_gettyimages-1466716029.jpg.webp"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Prototype 'Brain-like' chip promises greener AI</h5>
+                            <p class="card-text">Concerns have been raised about emissions associated with warehouses
+                                full of computers powering AI systems. IBM said its prototype could lead to more
+                                efficient, less battery draining AI chips for smartphones.</p>
+                            <a href="https://www.bbc.com/news/technology-66465230" class="btn btn-primary">Read full
+                                article</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 d-flex">
-                <div class="card flex-fill" style="width: 18rem;">
-                    <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/0A81/production/_130698620_mediaitem130698619.jpg.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">How safe is my data after a hack or leak?</h5>
-                        <p class="card-text">The UK's elections watchdog revealed on Tuesday it had been the victim of a "complex cyber-attack" potentially affecting millions of voters.
-                            It also emerged personal details of police officers in Northern Ireland were published accidentally.</p>
-                        <a href="https://www.bbc.com/news/technology-66451970" class="btn btn-primary">Read full article</a>
+                <div class="col-md-4 d-flex">
+                    <div class="card flex-fill" style="width: 18rem;">
+                        <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/0A81/production/_130698620_mediaitem130698619.jpg.webp"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">How safe is my data after a hack or leak?</h5>
+                            <p class="card-text">The UK's elections watchdog revealed on Tuesday it had been the victim
+                                of a "complex cyber-attack" potentially affecting millions of voters.
+                                It also emerged personal details of police officers in Northern Ireland were published
+                                accidentally.</p>
+                            <a href="https://www.bbc.com/news/technology-66451970" class="btn btn-primary">Read full
+                                article</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
-
-
     {% else %}
-
-
 
         <div class="text-center my-5">
             <h1 class="primary-text"> Your ultimate all-in-one study companion! </h1>
@@ -171,21 +181,22 @@
         <!-- Updated code with card layout -->
         <div class="mx-5 px-4">
             <div class="row">
-                {% for comment in comments %}
+                <div class="row">
                     <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="row g-0">
+                        <div class="card h-100 d-flex flex-column">
+                            <div class="row g-0 align-items-center">
                                 <div class="col-md-4">
-                                    <!-- Add the image here, or set a default image URL if available -->
-                                    <img src="" class="img-fluid rounded-start"
-                                         alt="User Image">
+                                    <img src="static/user.png" class="img-fluid rounded-start" alt="User Image">
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ comment.user.first_name }}</h5>
-                                        <p class="card-text">{{ comment.description }}</p>
+                                        <h5 class="card-title">Iva D.</h5>
+                                        <p class="card-text">I recently came across this fantastic study companion
+                                            website that has truly transformed the way I approach my studies. The site
+                                            is incredibly user-friendly and offers a wealth of resources that have
+                                            helped me to stay on top of my coursework.</p>
                                         <p class="card-text">
-                                            {% for i in comment.stars %}
+                                            {% for _ in "12345" %}
                                                 <i class="fas fa-star"></i>
                                             {% endfor %}
                                         </p>
@@ -194,10 +205,68 @@
                             </div>
                         </div>
                     </div>
-                {% endfor %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 d-flex flex-column">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <img src="static/user.png" class="img-fluid rounded-start" alt="User Image">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bojana M.</h5>
+                                        <p class="card-text">The resources available are top-notch, the site is easy to
+                                            navigate, and the personalized features have truly helped me to succeed in
+                                            my
+                                            studies. If you're looking for a reliable study companion, this website is
+                                            definitely worth checking out!</p>
+                                        <p class="card-text">
+                                            {% for _ in "12345" %}
+                                                <i class="fas fa-star"></i>
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 d-flex flex-column">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <img src="static/user.png" class="img-fluid rounded-start" alt="User Image">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Elena A.</h5>
+                                        <p class="card-text">A great feature of this website is the ability to customize
+                                            my
+                                            study plan. I can easily create study schedules and set reminders for
+                                            important
+                                            deadlines, which has helped me to stay organized and focused on my
+                                            goals.</p>
+                                        <p class="card-text">
+                                            {% for _ in "1234" %}
+                                                <i class="fas fa-star"></i>
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
+        <div class="text-center mt-5">
+            <h2>Join us on the Journey</h2>
+            <p>
+                Let's embark on this transformative journey together and make academic excellence an
+                attainable reality for all.
+            </p>
+            <a href="/register/" class="btn btn-primary btn-lg">Get Started</a>
+        </div>
 
     {% endif %}
 
