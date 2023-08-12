@@ -12,8 +12,6 @@
 
             <div class="mx-5 px-4">
 
-                <a href="{% url 'add_assignment_task' %}" class="btn btn-primary mb-4">Add New Assignment</a>
-
                 <div class="row">
                     {% for assignment in assignments %}
                         <div class="col-md-4 mb-4">
@@ -31,7 +29,7 @@
                                     </div>
                                     <div class="text-right">
                                         <a href="{% url 'assignment_details' name=assignment.name %}"
-                                           class="btn btn-link">See
+                                           class="btn btn-outline-success mt-2">See
                                             more</a>
                                     </div>
                                 </div>
@@ -69,6 +67,9 @@
                         </script>
 
                     {% endfor %}
+                </div>
+                <div class="row text-center mx-auto" style="max-width: 300px">
+                    <a href="{% url 'add_assignment_task' %}" class="btn btn-primary mx-5 px-4">Add New Assignment</a>
                 </div>
             </div>
 

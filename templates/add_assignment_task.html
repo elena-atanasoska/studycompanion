@@ -9,7 +9,6 @@
 {% block content %}
     {% if user.is_authenticated %}
         <div class="container">
-        <a href="{% url 'assignments' %}" class="btn btn-outline-secondary">Go Back</a>
         <div class="mx-auto" style="max-width: 600px">
         <h1 class="text-center primary-text mb-5">Add New Assignment and Task</h1>
         <form method="post" style="max-width: 400px" class="mx-auto">
