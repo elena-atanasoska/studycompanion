@@ -1,44 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container my-5">
-    <div class="text-center my-5">
-        <h1 class="primary-text"> Group Study </h1>
-    </div>
+    {% if user.is_authenticated %}
+        <div class="container my-5">
+            <div class="text-center my-5">
+                <h1 class="primary-text"> Group Study </h1>
+            </div>
 
-    <div class="text-center my-5" style="font-size: x-large;">
-        <span class="primary-text"> Having difficulties? Other people are here to help! </span>
-    </div>
+            <div class="text-center my-5" style="font-size: x-large;">
+                <span class="primary-text"> Having difficulties? Other people are here to help! </span>
+            </div>
 
-    <div class="row justify-content-center">
-        {% for question in questions %}
-        <div class="col-md-8">
-            <div class="card mb-3 navcolor-border shadow">
-                <div class="row g-0">
-                    <div class="col-md-4">
-{#                        <img src="{% static 'path/to/your/image.png' %}" class="img-fluid rounded-start" alt="...">#}
-                        <p class="card-text primary-text ml-2">{{ question.user }} </p>
-                    </div>
+            <div class="row justify-content-center">
+                {% for question in questions %}
                     <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title primary-text">{{ question.title }}</h5>
-                            <p class="card-text primary-text"><strong>Course:</strong> {{ question.course }}</p>
-                            <p class="card-text primary-text"><strong>Problem description:</strong> {{ question.description }}</p>
-                             <a href="{% url 'ask_question' %}" class="btn btn-success">Start a Conversation</a>
+                        <div class="card mb-3 navcolor-border shadow">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    {#                        <img src="{% static 'path/to/your/image.png' %}" class="img-fluid rounded-start" alt="...">#}
+                                    <p class="card-text primary-text ml-2">{{ question.user }} </p>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title primary-text">{{ question.title }}</h5>
+                                        <p class="card-text primary-text"><strong>Course:</strong> {{ question.course }}
+                                        </p>
+                                        <p class="card-text primary-text"><strong>Problem
+                                            description:</strong> {{ question.description }}</p>
+                                        <a href="{% url 'ask_question' %}" class="btn btn-success">Start a
+                                            Conversation</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
+
             </div>
+
+            <div class="row text-center mx-auto" style="max-width: 300px">
+                <a href="{% url 'ask_question' %}" class="btn btn-primary mx-5 px-4 mt-2">Ask a New Question</a>
+            </div>
+
         </div>
-        {% endfor %}
 
-    </div>
-
-    <div class="row text-center mx-auto" style="max-width: 300px">
-        <a href="{% url 'ask_question' %}" class="btn btn-primary mx-5 px-4 mt-2">Ask a New Question</a>
-    </div>
-
-</div>
-
-
+    {% else %}
+        {% include "unauthenticated_message.html" %}
+    {% endif %}
 {% endblock %}
