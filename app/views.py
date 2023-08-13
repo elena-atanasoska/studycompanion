@@ -104,12 +104,14 @@ def assignment_details(request, name):
     context = {"assignment": assignment, "source": source}
     return render(request, "assignment_details.html", context=context)
 
+
 def delete_assignment(request, name):
     assignment = Assignment.objects.get(name=name)
     if request.method == 'POST':
         assignment.delete()
         return redirect('assignments')
     return render(request, 'delete_assignment.html', {'assignment': assignment})
+
 
 def reminders_all(request):
     reminders = Reminder.objects.all()
@@ -126,6 +128,7 @@ def add_reminder(request):
         form = ReminderForm()
 
     return render(request, 'add_reminder.html', {'form': form})
+
 
 def reminder_details(request, name):
     reminder = Reminder.objects.get(name=name)
@@ -146,6 +149,7 @@ def delete_reminder(request, name):
         return redirect('reminders')
     return render(request, 'delete_reminder.html', {'reminder': reminder})
 
+
 def edit_reminder(request, name=None):
     reminder = Reminder.objects.get(name=name)
 
@@ -158,6 +162,7 @@ def edit_reminder(request, name=None):
         form = ReminderForm(instance=reminder)
 
     return render(request, 'edit_reminder.html', {'form': form, 'reminder': reminder})
+
 
 def edit_assignment(request, name=None):
     assignment = Assignment.objects.get(name=name)
@@ -177,6 +182,7 @@ def group_study(request):
     questions = Question.objects.all()
     return render(request, 'group_study.html', {'questions': questions})
 
+
 def ask_question(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -189,3 +195,7 @@ def ask_question(request):
         form = QuestionForm()
 
     return render(request, 'ask_question.html', {'form': form})
+
+
+def chat(request):
+    return render(request, "chat.html")
