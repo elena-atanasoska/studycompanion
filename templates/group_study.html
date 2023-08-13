@@ -8,16 +8,16 @@
             </div>
 
             <div class="text-center my-5" style="font-size: x-large;">
-                <span class="primary-text"> Having difficulties? Other people are here to help! </span>
+                <span class="text-warning"> Having difficulties? Other people are here to help! </span>
             </div>
 
             <div class="row justify-content-center">
                 {% for question in questions %}
                     <div class="col-md-8">
-                        <div class="card mb-3 navcolor-border shadow">
+                        <div class="card mb-3 navcolor-border shadow" style="border-width: 4px; border-radius:15px;">
                             <div class="row g-0">
-                                <div class="col-md-4">
-                                    {#                        <img src="{% static 'path/to/your/image.png' %}" class="img-fluid rounded-start" alt="...">#}
+                                <div class="col-md-4 d-flex align-items-center flex-column justify-content-center">
+                                    <img src="http://127.0.0.1:8000/static/user.png" class="img-fluid rounded-start" alt="User Image" style="max-width: 100px; max-height: 100px;">
                                     <p class="card-text primary-text ml-2">{{ question.user }} </p>
                                 </div>
                                 <div class="col-md-8">
@@ -27,7 +27,7 @@
                                         </p>
                                         <p class="card-text primary-text"><strong>Problem
                                             description:</strong> {{ question.description }}</p>
-                                        <a href="{% url 'ask_question' %}" class="btn btn-success">Start a
+                                        <a href="{% url 'chat' %}" class="btn btn-success">Start a
                                             Conversation</a>
                                     </div>
                                 </div>

@@ -42,4 +42,5 @@ urlpatterns = [
     path('ask_question/', views.ask_question, name='ask_question'),
     path('reminder_details/<str:name>/<str:source>/', views.reminder_details, name='reminder_details'),
     path('assignment_details/<str:name>/<str:source>/', views.assignment_details, name='assignment_details'),
+    path('chat/', views.chat, name='chat')
 ]
