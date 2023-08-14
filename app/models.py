@@ -66,6 +66,7 @@ class Course(models.Model):
 class Assignment(models.Model):
     PROGRESS_CHOICES = [(i, str(i)) for i in range(11)]
 
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
@@ -88,10 +89,12 @@ class Task(models.Model):
 
 
 class Reminder(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     deadline = models.DateTimeField(default=datetime.now() + timedelta(days=7))
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

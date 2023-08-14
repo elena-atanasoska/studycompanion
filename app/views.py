@@ -1,9 +1,11 @@
 from datetime import datetime, timedelta
+
+from django.contrib.auth.decorators import login_required
 from django.db.models import F, ExpressionWrapper
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout as auth_logout
-#from .forms import CustomUserCreationForm, CustomAuthenticationForm, AssignmentTaskForm, ReminderForm, QuestionForm
+# from .forms import CustomUserCreationForm, CustomAuthenticationForm, AssignmentTaskForm, ReminderForm, QuestionForm
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, ReminderForm, QuestionForm, AssignmentForm, \
     TaskForm, TaskAssignmentForm
 from urllib.parse import urlparse
@@ -13,10 +15,10 @@ from app.models import Comment, Assignment, Task, Reminder, Question
 
 
 def your_view(request):
-    comments = Comment.objects.all()
     current_date = datetime.now().date()
     current_datetime = timezone.now()
     end_date_limit = current_date + timedelta(days=5)
+
     assignments = Assignment.objects.filter(due_date__lte=end_date_limit)
     active_reminders = Reminder.objects.filter(deadline__gt=current_datetime)
 
@@ -24,8 +26,10 @@ def your_view(request):
     assignment_least_progress = assignments.order_by('progress').first() if assignments.exists() else None
     assignment_most_progress = assignments.order_by('-progress').first() if assignments.exists() else None
 
-    return render(request, 'index.html', {'comments': comments, 'user': request.user, 'assignments': assignments, 'nearest_reminder':nearest_reminder,  'assignment_least_progress': assignment_least_progress,
-        'assignment_most_progress': assignment_most_progress,})
+    return render(request, 'index.html',
+                  {'user': request.user, 'assignments': assignments, 'nearest_reminder': nearest_reminder,
+                   'assignment_least_progress': assignment_least_progress,
+                   'assignment_most_progress': assignment_most_progress, })
 
 
 def user_logout(request):
@@ -59,35 +63,13 @@ def user_login(request):
     return render(request, 'login.html', {'form': form})
 
 
+@login_required
 def assignments_all(request):
-    #queryset = Assignment.objects.all()
-    queryset = Assignment.objects.all().prefetch_related('tasks')
+    user = request.user
+    queryset = Assignment.objects.filter(user=user)
     tasks = Task.objects.all()
     context = {"assignments": queryset, "tasks": tasks}
     return render(request, "assignments.html", context=context)
-
-
-# def add_assignment_task(request):
-#     if request.method == 'POST':
-#         form = AssignmentTaskForm(request.POST)
-#
-#         if form.is_valid():
-#             assignment = form.save()
-#             assignment.user = request.user
-#             # task_name = form.cleaned_data['task_name']
-#             # is_finished = form.cleaned_data['is_finished']
-#             #
-#             # # Create the task and associate it with the assignment
-#             # task = Task(name=task_name, is_finished=is_finished, assignment=assignment)
-#             # task.save()
-#
-#             return redirect(
-#                 'assignments')  # Replace 'assignment_list' with your actual view name for listing assignments
-#
-#     else:
-#         form = AssignmentTaskForm()
-#
-#     return render(request, 'add_assignment_task.html', {'form': form})
 
 
 def add_assignment_task(request):
@@ -119,7 +101,7 @@ def contact(request):
 
 
 def assignment_details(request, name):
-    assignment = Assignment.objects.get(name=name)
+    assignment = Assignment.objects.get(id=name)
     tasks = Task.objects.all()
     source = None
     referer = request.META.get('HTTP_REFERER')
@@ -132,15 +114,17 @@ def assignment_details(request, name):
 
 
 def delete_assignment(request, name):
-    assignment = Assignment.objects.get(name=name)
+    assignment = Assignment.objects.get(id=name)
     if request.method == 'POST':
         assignment.delete()
         return redirect('assignments')
     return render(request, 'delete_assignment.html', {'assignment': assignment})
 
 
+@login_required
 def reminders_all(request):
-    reminders = Reminder.objects.all()
+    user = request.user
+    reminders = Reminder.objects.filter(user=user)
     return render(request, 'reminders.html', {'reminders': reminders})
 
 
@@ -157,7 +141,7 @@ def add_reminder(request):
 
 
 def reminder_details(request, name):
-    reminder = Reminder.objects.get(name=name)
+    reminder = Reminder.objects.get(id=name)
     source = None
     referer = request.META.get('HTTP_REFERER')
     if referer:
@@ -169,7 +153,7 @@ def reminder_details(request, name):
 
 
 def delete_reminder(request, name):
-    reminder = Reminder.objects.get(name=name)
+    reminder = Reminder.objects.get(id=name)
     if request.method == 'POST':
         reminder.delete()
         return redirect('reminders')
@@ -177,7 +161,7 @@ def delete_reminder(request, name):
 
 
 def edit_reminder(request, name=None):
-    reminder = Reminder.objects.get(name=name)
+    reminder = Reminder.objects.get(id=name)
 
     if request.method == 'POST':
         form = ReminderForm(request.POST, instance=reminder)
@@ -191,7 +175,7 @@ def edit_reminder(request, name=None):
 
 
 def edit_assignment(request, name=None):
-    assignment = Assignment.objects.get(name=name)
+    assignment = Assignment.objects.get(id=name)
     tasks = assignment.tasks.all()
 
     if request.method == 'POST':

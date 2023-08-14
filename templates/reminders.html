@@ -44,7 +44,7 @@
                                 <p class="card-text"><i>Course:</i> {{ reminder.course }}</p>
                             </div>
                             <div class="text-right ml-auto">
-                                <a href="{% url 'reminder_details' name=reminder.name %}?source=reminders"
+                                <a href="{% url 'reminder_details' name=reminder.id %}?source=reminders"
                                    class="btn btn-outline-success mb-2 mr-2">See more</a>
                             </div>
                             <div class="card-footer">
