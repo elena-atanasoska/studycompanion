@@ -2,6 +2,15 @@
 
 {% block content %}
     {% if user.is_authenticated %}
+
+        <div>
+
+        {% if reminders.count == 0 %}
+            <h2 class="text-center primary-text mb-4">You do not have any reminders.</h2>
+            <div class="row text-center mx-auto py-4" style="max-width: 300px">
+                <a href="{% url 'add_reminder' %}" class="btn btn-primary px-4">Add New Reminder</a>
+            </div>
+        {% else %}
         <div class="text-center my-3">
             <h1 class="primary-text"> My Reminders </h1>
         </div>
@@ -30,10 +39,15 @@
         {#            {% endfor %}#}
         {#        </div>#}
         {#    </div>#}
-        <div class="row text-center mx-auto py-4" style="max-width: 300px">
-            <a href="{% url 'add_reminder' %}" class="btn btn-primary px-4">Add New Reminder</a>
-        </div>
+
         <div class="mx-5 px-4">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success mt-3">
+                        {{ message|safe }}
+                    </div>
+                {% endfor %}
+            {% endif %}
             <div class="row">
                 {% for reminder in reminders %}
                     <div class="col-md-4 mb-4">
@@ -61,6 +75,15 @@
                 {% endfor %}
             </div>
         </div>
+
+        {% endif %}
+        </div>
+
+        <div class="fixed-bottom text-right mx-5 mb-3">
+            <a href="{% url 'add_reminder' %}" class="btn btn-primary px-4">Add New Reminder</a>
+        </div>
+
+
 
     {% else %}
         {% include "unauthenticated_message.html" %}
