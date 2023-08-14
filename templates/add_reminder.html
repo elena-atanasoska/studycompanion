@@ -13,21 +13,22 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label class="form-label">Name</label>
+                        <label class="form-label">Name <span class="text-danger">*</span></label>
                         {{ form.name }}
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Description</label>
+                        <label class="form-label">Description <span class="text-danger">*</span></label>
                         {{ form.description }}
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Course</label>
+                        <label class="form-label">Course <span class="text-danger">*</span></label>
                         {{ form.course }}
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Deadline</label>
+                        <label class="form-label">Deadline <span class="text-danger">*</span></label>
                         {{ form.deadline }}
                     </div>
+                    <div class="mb-3"> <span class="text-danger">All fields are required.</span></div>
                     <div class="row">
                         <div class="col-md-6 text-left mt-2">
                             <a href="{% url 'reminders' %}" class="btn btn-secondary">Cancel</a>

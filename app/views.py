@@ -3,7 +3,9 @@ from django.db.models import F, ExpressionWrapper
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout as auth_logout
-from .forms import CustomUserCreationForm, CustomAuthenticationForm, AssignmentTaskForm, ReminderForm, QuestionForm
+#from .forms import CustomUserCreationForm, CustomAuthenticationForm, AssignmentTaskForm, ReminderForm, QuestionForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, ReminderForm, QuestionForm, AssignmentForm, \
+    TaskForm, TaskAssignmentForm
 from urllib.parse import urlparse
 
 # Create your views here.
@@ -58,29 +60,52 @@ def user_login(request):
 
 
 def assignments_all(request):
-    queryset = Assignment.objects.all()
-    context = {"assignments": queryset}
+    #queryset = Assignment.objects.all()
+    queryset = Assignment.objects.all().prefetch_related('tasks')
+    tasks = Task.objects.all()
+    context = {"assignments": queryset, "tasks": tasks}
     return render(request, "assignments.html", context=context)
+
+
+# def add_assignment_task(request):
+#     if request.method == 'POST':
+#         form = AssignmentTaskForm(request.POST)
+#
+#         if form.is_valid():
+#             assignment = form.save()
+#             assignment.user = request.user
+#             # task_name = form.cleaned_data['task_name']
+#             # is_finished = form.cleaned_data['is_finished']
+#             #
+#             # # Create the task and associate it with the assignment
+#             # task = Task(name=task_name, is_finished=is_finished, assignment=assignment)
+#             # task.save()
+#
+#             return redirect(
+#                 'assignments')  # Replace 'assignment_list' with your actual view name for listing assignments
+#
+#     else:
+#         form = AssignmentTaskForm()
+#
+#     return render(request, 'add_assignment_task.html', {'form': form})
 
 
 def add_assignment_task(request):
     if request.method == 'POST':
-        form = AssignmentTaskForm(request.POST)
-
+        form = AssignmentForm(request.POST)
         if form.is_valid():
-            assignment = form.save()
-            task_name = form.cleaned_data['task_name']
-            is_finished = form.cleaned_data['is_finished']
+            assignment = form.save(commit=False)
+            assignment.user = request.user  # Assuming you're using authentication
+            assignment.save()
 
-            # Create the task and associate it with the assignment
-            task = Task(name=task_name, is_finished=is_finished, assignment=assignment)
-            task.save()
+            tasks_text = form.cleaned_data.get('tasks', '')
+            task_names = [task.strip() for task in tasks_text.split('\n') if task.strip()]
+            for task_name in task_names:
+                Task.objects.create(name=task_name, assignment=assignment)
 
-            return redirect(
-                'assignments')  # Replace 'assignment_list' with your actual view name for listing assignments
-
+            return redirect('assignments')  # Redirect to the list of assignments
     else:
-        form = AssignmentTaskForm()
+        form = AssignmentForm()
 
     return render(request, 'add_assignment_task.html', {'form': form})
 
@@ -95,13 +120,14 @@ def contact(request):
 
 def assignment_details(request, name):
     assignment = Assignment.objects.get(name=name)
+    tasks = Task.objects.all()
     source = None
     referer = request.META.get('HTTP_REFERER')
     if referer:
         parsed_url = urlparse(referer)
         source = parsed_url.path
 
-    context = {"assignment": assignment, "source": source}
+    context = {"assignment": assignment, "tasks": tasks, "source": source}
     return render(request, "assignment_details.html", context=context)
 
 
@@ -166,16 +192,21 @@ def edit_reminder(request, name=None):
 
 def edit_assignment(request, name=None):
     assignment = Assignment.objects.get(name=name)
+    tasks = assignment.tasks.all()
 
     if request.method == 'POST':
-        form = AssignmentTaskForm(request.POST, instance=assignment)
+        form = AssignmentForm(request.POST, instance=assignment)
         if form.is_valid():
+            tasks_text = form.cleaned_data.get('tasks', '')
+            task_names = [task.strip() for task in tasks_text.split('\n') if task.strip()]
+            for task_name in task_names:
+                Task.objects.create(name=task_name, assignment=assignment)
             form.save()
             return redirect('assignments')
     else:
-        form = AssignmentTaskForm(instance=assignment)
+        form = AssignmentForm(instance=assignment)
 
-    return render(request, 'edit_assignment.html', {'form': form, 'assignment': assignment})
+    return render(request, 'edit_assignment.html', {'form': form, 'assignment': assignment, 'tasks': tasks})
 
 
 def group_study(request):
@@ -199,3 +230,45 @@ def ask_question(request):
 
 def chat(request):
     return render(request, "chat.html")
+
+
+def edit_task(request, name):
+    task = Task.objects.get(name=name)
+
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('assignments')
+    else:
+        form = TaskForm(instance=task)
+
+    context = {'form': form, 'task': task}
+    return render(request, 'edit_task.html', context)
+
+
+def delete_task(request, name):
+    task = Task.objects.get(name=name)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('assignments')
+    return render(request, 'delete_task.html', {'task': task})
+
+
+def task_details(request, task_name):
+    task = get_object_or_404(Task, name=task_name)
+    context = {'task': task}
+    return render(request, 'task_details.html', context)
+
+
+def add_task(request):
+    if request.method == 'POST':
+        form = TaskAssignmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('assignments')
+    else:
+        form = TaskAssignmentForm()
+
+    context = {'form': form}
+    return render(request, 'add_task.html', context)
