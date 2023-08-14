@@ -11,7 +11,7 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm, ReminderFor
 from urllib.parse import urlparse
 from django.contrib import messages
 # Create your views here.
-from app.models import Comment, Assignment, Task, Reminder, Question
+from app.models import Comment, Assignment, Task, Reminder, Question, CustomUser
 import logging
 
 
@@ -20,8 +20,10 @@ def your_view(request):
     current_datetime = timezone.now()
     end_date_limit = current_date + timedelta(days=5)
 
-    assignments = Assignment.objects.filter(due_date__lte=end_date_limit, user = request.user)
-    active_reminders = Reminder.objects.filter(deadline__gt=current_datetime, user = request.user)
+    user = get_object_or_404(CustomUser, id=int(request.user.id)) if request.user.is_authenticated else None
+
+    assignments = Assignment.objects.filter(due_date__lte=end_date_limit)
+    active_reminders = Reminder.objects.filter(deadline__gt=current_datetime)
 
     nearest_reminder = active_reminders.order_by('deadline').first() if active_reminders.exists() else None
     assignment_least_progress = assignments.order_by('progress').first() if assignments.exists() else None
