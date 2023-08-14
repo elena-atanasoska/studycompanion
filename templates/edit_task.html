@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Task
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="container">
+            <a href="{% url 'task_details' task_name=task.name %}" class="btn btn-outline-secondary">Go Back</a>
+            <h1 class="text-center primary-text my-5">Edit Task</h1>
+            <form method="post" style="max-width: 400px" class="mx-auto">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Task Name:</label>
+                    {{ form.name }}
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="is_finished" name="is_finished" {% if task.is_finished %}checked{% endif %} value="true">
+                    <label class="form-check-label" for="isFinished">Is Finished</label>
+                </div>
+                <div class="text-right">
+                    <input type="submit" value="Save" class="btn btn-primary mt-2">
+                </div>
+            </form>
+        </div>
+    {% else %}
+        {% include "unauthenticated_message.html" %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add New Task
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <a href="{% url 'assignments' %}"
+               class="btn btn-outline-secondary">Go Back</a>
+        <h1 class="text-center primary-text my-5">Add New Task</h1>
+        <form method="post" style="max-width: 400px" class="mx-auto">
+            {% csrf_token %}
+            {{ form.name.label_tag }}
+            {{ form.name }}
+{#            <div class="my-3 form-check">#}
+{#                <input type="checkbox" class="form-check-input" id="isFinished" name="isFinished">#}
+{#                <label class="form-check-label" for="isFinished">Is Finished</label>#}
+{#            </div>#}
+            {{ form.assignment.label_tag }}
+            {{ form.assignment }}
+
+            <p class="text-success mt-4">When you add a Task, by default it is not finished. When you finish it
+                and want to change that you can do so by editing the task. :)</p>
+            <div class="text-right">
+                <input type="submit" value="Add Task" class="btn btn-primary mt-2">
+            </div>
+        </form>
+    </div>
+{% endblock %}

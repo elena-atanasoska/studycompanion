@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <div class="text-center my-5">
+        <div class="text-center my-3">
             <h1 class="primary-text"> My Reminders </h1>
         </div>
         <!-- Updated code with card layout -->
@@ -30,13 +30,16 @@
         {#            {% endfor %}#}
         {#        </div>#}
         {#    </div>#}
+        <div class="row text-center mx-auto py-4" style="max-width: 300px">
+            <a href="{% url 'add_reminder' %}" class="btn btn-primary px-4">Add New Reminder</a>
+        </div>
         <div class="mx-5 px-4">
             <div class="row">
                 {% for reminder in reminders %}
                     <div class="col-md-4 mb-4">
-                        <div class="card">
+                        <div class="card border-secondary">
                             <div class="card-body">
-                                <h5 class="card-title">{{ reminder.name }}</h5>
+                                <h5 class="card-title text-success">{{ reminder.name }}</h5>
                                 <p class="card-text">{{ reminder.description }}</p>
                                 <p class="card-text"><i>Course:</i> {{ reminder.course }}</p>
                             </div>
@@ -59,9 +62,6 @@
             </div>
         </div>
 
-        <div class="row text-center mx-auto" style="max-width: 300px">
-            <a href="{% url 'add_reminder' %}" class="btn btn-primary mx-5 px-4">Add New Reminder</a>
-        </div>
     {% else %}
         {% include "unauthenticated_message.html" %}
     {% endif %}

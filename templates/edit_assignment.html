@@ -11,7 +11,42 @@
             <h1 class="text-center primary-text my-5">Edit Assignment</h1>
             <form method="post" style="max-width: 400px" class="mx-auto">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <div class="mb-3">
+                    <label class="form-label">Name <span class="text-danger">*</span></label>
+                    {{ form.name }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Course <span class="text-danger">*</span></label>
+                    {{ form.course }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description <span class="text-danger">*</span></label>
+                    {{ form.description }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Progress <span class="text-danger">*</span></label>
+                    {{ form.progress }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Due Date <span class="text-danger">*</span></label>
+                    {{ form.due_date }}
+                </div>
+
+{#                        {% for task in tasks %}#}
+{#                            <li>#}
+{#                                {{ task.name }} -#}
+{#                                <input type="checkbox" name="task_{{ task.id }}" {% if task.is_finished %}checked{% endif %}>#}
+{#                                <a href="{% url 'edit_task' task.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>#}
+{#                                <a href="{% url 'delete_task' task.id %}" class="btn btn-outline-danger btn-sm">Delete</a>#}
+{#                            </li>#}
+{#                        {% endfor %}#}
+{#                    <div class="mb-3">#}
+{#                        <label class="form-label">Tasks (one per line):</label>#}
+{#                        <textarea name="tasks" class="form-control" rows="3">{{ form.tasks.value }}</textarea>#}
+{#                    </div>#}
+                <p class="text-success">Note: If you want to edit the tasks for this assignment, go to previous page and click on the task you want to edit.</p>
+
+
                 <div class="text-right">
                     <input type="submit" value="Save" class="btn btn-primary mt-2">
                 </div>
@@ -21,5 +56,3 @@
         {% include "unauthenticated_message.html" %}
     {% endif %}
 {% endblock %}
-
-{#<a href="{% url 'assignment_details' name=assignment.name %}" class="btn btn-outline-success">See more</a>#}

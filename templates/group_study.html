@@ -7,8 +7,12 @@
                 <h1 class="primary-text"> Group Study </h1>
             </div>
 
-            <div class="text-center my-5" style="font-size: x-large;">
+            <div class="text-center my-3" style="font-size: x-large;">
                 <span class="text-warning"> Having difficulties? Other people are here to help! </span>
+            </div>
+
+             <div class="row text-center mx-auto py-4" style="max-width: 300px">
+                <a href="{% url 'ask_question' %}" class="btn btn-primary px-4 mt-2">Ask a Question</a>
             </div>
 
             <div class="row justify-content-center">
@@ -36,10 +40,6 @@
                     </div>
                 {% endfor %}
 
-            </div>
-
-            <div class="row text-center mx-auto" style="max-width: 300px">
-                <a href="{% url 'ask_question' %}" class="btn btn-primary mx-5 px-4 mt-2">Ask a New Question</a>
             </div>
 
         </div>

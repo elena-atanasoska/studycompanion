@@ -42,5 +42,9 @@ urlpatterns = [
     path('ask_question/', views.ask_question, name='ask_question'),
     path('reminder_details/<str:name>/<str:source>/', views.reminder_details, name='reminder_details'),
     path('assignment_details/<str:name>/<str:source>/', views.assignment_details, name='assignment_details'),
-    path('chat/', views.chat, name='chat')
+    path('chat/', views.chat, name='chat'),
+    path('task_details/<str:task_name>/', views.task_details, name='task_details'),
+    path('edit_task/<str:name>/', views.edit_task, name='edit_task'),
+    path('delete_task/<str:name>/', views.delete_task, name='delete_task'),
+    path('add_task/', views.add_task, name='add_task')
 ]

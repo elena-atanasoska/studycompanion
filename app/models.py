@@ -72,6 +72,7 @@ class Assignment(models.Model):
     description = models.TextField()
     progress = models.IntegerField(choices=PROGRESS_CHOICES, default=0)
     due_date = models.DateField(default=datetime.now() + timedelta(days=7))
+    tasks = models.ManyToManyField('Task', related_name='assignments')
 
     def __str__(self):
         return self.name

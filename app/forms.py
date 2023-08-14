@@ -16,17 +16,39 @@ class CustomAuthenticationForm(AuthenticationForm):
         model = CustomUser
         fields = ('username', 'password')
 
+#
+# class AssignmentTaskForm(forms.ModelForm):
+#     task_name = forms.CharField(max_length=200)
+#     is_finished = forms.BooleanField(required=False, widget=forms.CheckboxInput)
+#
+#     def __init__(self, *args, **kwargs):
+#         super(AssignmentTaskForm, self).__init__(*args, **kwargs)
+#         for field in self.visible_fields():
+#             field.field.widget.attrs["class"] = "form-control"
+#
+#     class Meta:
+#         model = Assignment
+#         fields = '__all__'
+#
+#     def as_bootstrap(self):
+#         for name, field in self.fields.items():
+#             if isinstance(field.widget, forms.CheckboxInput):
+#                 field.widget.attrs['class'] = 'form-check-input'
+#             else:
+#                 field.widget.attrs['class'] = 'form-control'
+#         return self
 
-class AssignmentTaskForm(forms.ModelForm):
-    task_name = forms.CharField(max_length=200)
-    is_finished = forms.BooleanField(required=False, widget=forms.CheckboxInput)
+#
+# TaskFormSet = modelformset_factory(Task, fields=('name',), extra=0)
+
+
+class AssignmentForm(forms.ModelForm):
+    #tasks = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
+
     def __init__(self, *args, **kwargs):
-        super(AssignmentTaskForm, self).__init__(*args, **kwargs)
+        super(AssignmentForm, self).__init__(*args, **kwargs)
         for field in self.visible_fields():
             field.field.widget.attrs["class"] = "form-control"
-    class Meta:
-        model = Assignment
-        fields = '__all__'
 
     def as_bootstrap(self):
         for name, field in self.fields.items():
@@ -36,8 +58,9 @@ class AssignmentTaskForm(forms.ModelForm):
                 field.widget.attrs['class'] = 'form-control'
         return self
 
-#
-# TaskFormSet = modelformset_factory(Task, fields=('name',), extra=0)
+    class Meta:
+        model = Assignment
+        fields = ('name', 'course', 'description', 'progress', 'due_date')
 
 
 class ReminderForm(forms.ModelForm):
@@ -65,5 +88,27 @@ class QuestionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs["class"] = "form-control"
+
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['name', 'is_finished']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs["class"] = "form-control"
+
+
+class TaskAssignmentForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['name', 'is_finished', 'assignment']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         for field in self.visible_fields():
             field.field.widget.attrs["class"] = "form-control"

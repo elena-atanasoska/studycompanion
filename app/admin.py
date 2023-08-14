@@ -34,39 +34,26 @@ class CourseAdmin(admin.ModelAdmin):
 admin.site.register(Course, CourseAdmin)
 
 
-class TaskInline(admin.TabularInline):  # or admin.StackedInline for a different display style
+class TaskInline(admin.TabularInline):
     model = Task
-    extra = 1
+    extra = 1  # Number of empty task forms to display
 
 
 class AssignmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'course', 'user', 'progress', 'due_date')
+    list_filter = ('course', 'user', 'progress', 'due_date')
+    search_fields = ('name', 'user__username')
     inlines = [TaskInline]
-    #
-    # def save_model(self, request, obj, form, change):
-    #     # Save the Assignment object first
-    #     super().save_model(request, obj, form, change)
-    #
-    #     # Handle tasks for the Assignment
-    #     task_data = form.cleaned_data.get('tasks')
-    #     if task_data:
-    #         task_names = task_data.split(',')  # Assuming task_data is a comma-separated string of task names
-    #         tasks = Task.objects.filter(name__in=task_names)
-    #         obj.tasks.set(tasks)
-    #
-    # def get_form(self, request, obj=None, **kwargs):
-    #     # Override get_form method to pass the current assignment object to the custom form
-    #     form = super().get_form(request, obj, **kwargs)
-    #     form.current_assignment = obj
-    #     return form
-    #
-    # def get_formsets_with_inlines(self, request, obj=None):
-    #     # Override get_formsets_with_inlines to pass the current assignment object to the inline formset
-    #     for inline in self.get_inline_instances(request, obj):
-    #         yield inline.get_formset(request, obj), inline
+
+
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ('name', 'assignment', 'is_finished')
+    list_filter = ('assignment', 'is_finished')
+    search_fields = ('name', 'assignment__name')
 
 
 admin.site.register(Assignment, AssignmentAdmin)
+admin.site.register(Task, TaskAdmin)
 
 
 class ReminderAdmin(admin.ModelAdmin):
@@ -84,5 +71,6 @@ class QuestionAdmin(admin.ModelAdmin):
     list_filter = ('course', 'user')
     search_fields = ('title', 'description', 'user__username')
     ordering = ('-id',)  # You can specify the default sorting order
+
 
 admin.site.register(Question, QuestionAdmin)
