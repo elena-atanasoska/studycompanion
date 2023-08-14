@@ -43,7 +43,7 @@ class CustomAuthenticationForm(AuthenticationForm):
 
 
 class AssignmentForm(forms.ModelForm):
-    #tasks = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
+    tasks = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
 
     def __init__(self, *args, **kwargs):
         super(AssignmentForm, self).__init__(*args, **kwargs)

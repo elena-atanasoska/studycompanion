@@ -23,7 +23,7 @@
                             {% for task in tasks %}
                                 {% if task.assignment == assignment %}
                                 <li class="list-group-item">
-                                <a href="{% url 'task_details' task_name=task.name %}">
+                                <a href="{% url 'task_details' task_name=task.id %}">
                                                         {{ task.name }}</a> -
                                     <span class="{% if task.is_finished %}text-success{% else %}text-danger{% endif %}">
                                 {% if task.is_finished %}Finished{% else %}Not Finished{% endif %}

@@ -6,7 +6,6 @@
 
         <div>
 
-
             {% if upcoming_assignments.count == 0 and past_assignments.count == 0 %}
                 <h2 class="text-center primary-text mb-4">You do not have any assignments.</h2>
                  <div class="row text-center mx-auto py-4" style="max-width: 300px">
@@ -20,6 +19,13 @@
                 <h2 class="mb-4 text-center primary-text"
                         style="font-size: 44px; padding: 10px; border-radius: 5px;">Upcoming Assignments</h2>
                     <div class="mx-5 px-4">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success mt-3">
+                                {{ message|safe }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 <div class="row">
                     {% for assignment in upcoming_assignments %}
                         <div class="col-md-4 mb-4">
@@ -40,7 +46,7 @@
                                             {% for task in tasks %}
                                                 {% if task.assignment == assignment %}
                                                 <li class="list-group-item">
-                                                    <a href="{% url 'task_details' task_name=task.name %}">
+                                                    <a href="{% url 'task_details' task_name=task.id %}">
                                                         {{ task.name }}</a> -
                                                     <span class="{% if task.is_finished %}text-success{% else %}text-danger{% endif %}">
                                                         {% if task.is_finished %}Finished{% else %}Not Finished{% endif %}
@@ -119,7 +125,7 @@
                                             {% for task in tasks %}
                                                 {% if task.assignment == assignment %}
                                                 <li class="list-group-item">
-                                                    <a href="{% url 'task_details' task_name=task.name %}">
+                                                    <a href="{% url 'task_details' task_name=task.id %}">
                                                         {{ task.name }}</a> -
                                                     <span class="{% if task.is_finished %}text-success{% else %}text-danger{% endif %}">
                                                         {% if task.is_finished %}Finished{% else %}Not Finished{% endif %}

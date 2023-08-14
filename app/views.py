@@ -92,6 +92,7 @@ def add_assignment_task(request):
             for task_name in task_names:
                 Task.objects.create(name=task_name, assignment=assignment)
 
+            messages.success(request, 'Assignment added successfully.')
             return redirect('assignments')  # Redirect to the list of assignments
     else:
         form = AssignmentForm()
@@ -124,6 +125,7 @@ def delete_assignment(request, name):
     assignment = Assignment.objects.get(id=name)
     if request.method == 'POST':
         assignment.delete()
+        messages.success(request, 'Assignment deleted successfully.')
         return redirect('assignments')
     return render(request, 'delete_assignment.html', {'assignment': assignment})
 
@@ -169,6 +171,7 @@ def delete_reminder(request, name):
     reminder = Reminder.objects.get(id=name)
     if request.method == 'POST':
         reminder.delete()
+        messages.success(request, 'Reminder deleted successfully.')
         return redirect('reminders')
     return render(request, 'delete_reminder.html', {'reminder': reminder})
 
@@ -232,7 +235,7 @@ def chat(request):
 
 
 def edit_task(request, name):
-    task = Task.objects.get(name=name)
+    task = Task.objects.get(id=name)
 
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
@@ -247,15 +250,16 @@ def edit_task(request, name):
 
 
 def delete_task(request, name):
-    task = Task.objects.get(name=name)
+    task = Task.objects.get(id=name)
     if request.method == 'POST':
         task.delete()
+        messages.success(request, 'Task deleted successfully.')
         return redirect('assignments')
     return render(request, 'delete_task.html', {'task': task})
 
 
 def task_details(request, task_name):
-    task = get_object_or_404(Task, name=task_name)
+    task = get_object_or_404(Task, id=task_name)
     context = {'task': task}
     return render(request, 'task_details.html', context)
 
@@ -265,6 +269,7 @@ def add_task(request):
         form = TaskAssignmentForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Task added successfully.')
             return redirect('assignments')
     else:
         form = TaskAssignmentForm()

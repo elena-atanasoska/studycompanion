@@ -80,6 +80,7 @@ class Assignment(models.Model):
 
 
 class Task(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     is_finished = models.BooleanField(default=False)
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)

@@ -11,7 +11,19 @@
                 <h1 class="text-center primary-text mb-5">Ask a Question</h1>
                 <form method="post" style="max-width: 400px" class="mx-auto">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    <div class="mb-3">
+                        <label class="form-label">Title <span class="text-danger">*</span></label>
+                            {{ form.title }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Course <span class="text-danger">*</span></label>
+                            {{ form.course }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description <span class="text-danger">*</span></label>
+                            {{ form.description }}
+                    </div>
+                    <div class="mb-3"> <span class="text-danger">All fields are required.</span></div>
                     <div class="row">
                         <div class="col-md-6 text-left">
                             <a href="{% url 'group_study' %}" class="btn btn-secondary mt-2">Cancel</a>
