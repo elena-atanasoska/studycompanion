@@ -24,9 +24,13 @@
                         <label class="form-label">Course <span class="text-danger">*</span></label>
                         {{ form.course }}
                     </div>
+{#                    <div class="mb-3">#}
+{#                        <label class="form-label">Deadline <span class="text-danger">*</span></label>#}
+{#                        {{ form.deadline }}#}
+{#                    </div>#}
                     <div class="mb-3">
                         <label class="form-label">Deadline <span class="text-danger">*</span></label>
-                        {{ form.deadline }}
+                        <input type="text" class="form-control datetimepicker" id="id_deadline" name="deadline" required>
                     </div>
                     <div class="mb-3"> <span class="text-danger">All fields are required.</span></div>
                     <div class="row">
@@ -40,6 +44,21 @@
                 </form>
             </div>
         </div>
+
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                flatpickr(".datetimepicker", {
+                    enableTime: true,
+                    dateFormat: "Y-m-d H:i",
+                    minDate: "today",
+                    defaultHour: 12,
+                    defaultMinute: 0,
+                });
+            });
+        </script>
+
     {% else %}
         {% include "unauthenticated_message.html" %}
     {% endif %}

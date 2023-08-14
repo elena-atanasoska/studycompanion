@@ -28,8 +28,8 @@
                     {{ form.progress }}
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Due Date <span class="text-danger">*</span></label>
-                    {{ form.due_date }}
+                    <label class="form-label">Due date <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control datepicker" id="id_due_date" name="due_date">
                 </div>
 
 {#                        {% for task in tasks %}#}
@@ -52,6 +52,16 @@
                 </div>
             </form>
         </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                flatpickr(".datepicker", {
+                    dateFormat: "Y-m-d",
+                    minDate: "today"
+                });
+            });
+        </script>
+
     {% else %}
         {% include "unauthenticated_message.html" %}
     {% endif %}

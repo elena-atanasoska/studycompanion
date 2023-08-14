@@ -5,22 +5,23 @@
     {% if user.is_authenticated %}
 
         <div>
-            <div class="text-center my-3">
-                <h1 class="primary-text"> My Assignments </h1>
-            </div>
 
-        <div class="row text-center mx-auto py-4" style="max-width: 300px">
-            <a href="{% url 'add_assignment_task' %}" class="btn btn-primary px-4">Add New Assignment</a>
-        </div>
 
-        <div class="row text-center mx-auto py-4" style="max-width: 300px">
-            <a href="{% url 'add_task' %}" class="btn btn-primary px-4">Add New Task</a>
-        </div>
+            {% if upcoming_assignments.count == 0 and past_assignments.count == 0 %}
+                <h2 class="text-center primary-text mb-4">You do not have any assignments.</h2>
+                 <div class="row text-center mx-auto py-4" style="max-width: 300px">
+                    <a href="{% url 'add_assignment_task' %}" class="btn btn-primary px-4">Add New Assignment</a>
+                </div>
 
-            <div class="mx-5 px-4">
-
+                <div class="row text-center mx-auto py-4" style="max-width: 300px">
+                    <a href="{% url 'add_task' %}" class="btn btn-primary px-4">Add New Task</a>
+                </div>
+            {% else %}
+                <h2 class="mb-4 text-center primary-text"
+                        style="font-size: 44px; padding: 10px; border-radius: 5px;">Upcoming Assignments</h2>
+                    <div class="mx-5 px-4">
                 <div class="row">
-                    {% for assignment in assignments %}
+                    {% for assignment in upcoming_assignments %}
                         <div class="col-md-4 mb-4">
                             <div class="card navcolor-border">
                                 <h4 class="card-header navcolor text-white">{{ assignment.name }}</h4>
@@ -87,10 +88,95 @@
                             updateProgressBar(progressValue_{{ assignment.id }}, 'progressBar_{{ assignment.id }}');
                         </script>
 
+
                     {% endfor %}
                 </div>
 
             </div>
+
+
+        <h2 class="mb-4 text-center primary-text"
+                        style="font-size: 44px; padding: 10px; border-radius: 5px;">Past Assignments</h2>
+        <div class="mx-5 px-4">
+
+                <div class="row">
+                    {% for assignment in past_assignments %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card navcolor-border">
+                                <h4 class="card-header navcolor text-white">{{ assignment.name }}</h4>
+                                <div class="card-body">
+                                    <h5 class="card-title">Due Date: {{ assignment.due_date }}</h5>
+                                    <p class="card-text">Course: {{ assignment.course }}</p>
+                                    <p class="card-text">{{ assignment.description }}</p>
+                                    <div class="progress">
+                                        <div id="progressBar_{{ assignment.id }}"
+                                             class="progress-bar progress-bar-striped"
+                                             role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                    </div>
+                                    <h5 class="mt-3">Tasks:</h5>
+                                        <ul class="list-group">
+                                            {% for task in tasks %}
+                                                {% if task.assignment == assignment %}
+                                                <li class="list-group-item">
+                                                    <a href="{% url 'task_details' task_name=task.name %}">
+                                                        {{ task.name }}</a> -
+                                                    <span class="{% if task.is_finished %}text-success{% else %}text-danger{% endif %}">
+                                                        {% if task.is_finished %}Finished{% else %}Not Finished{% endif %}
+                                                    </span>
+                                                </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    <div class="text-right">
+                                        <a href="{% url 'assignment_details' name=assignment.id %}"
+                                           class="btn btn-outline-success mt-2">See
+                                            more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            function updateProgressBar(progress, progressBarId) {
+                                // Multiply the progress value by 10
+                                var percentage = progress * 10;
+
+                                // Set the width of the progress bar
+                                var progressBar = document.getElementById(progressBarId);
+                                progressBar.style.width = percentage + '%';
+                                progressBar.innerHTML = percentage + '%';
+
+                                // Update the aria-valuenow attribute
+                                progressBar.setAttribute('aria-valuenow', percentage);
+
+                                // Add custom color class based on the progress value
+                                if (percentage < 25) {
+                                    progressBar.classList.add('bg-danger');
+                                } else if (percentage < 50) {
+                                    progressBar.classList.add('bg-warning');
+                                } else if (percentage < 75) {
+                                    progressBar.classList.add('bg-primary');
+                                } else {
+                                    progressBar.classList.add('bg-success');
+                                }
+                            }
+
+                            // Example usage: Call the function with the progress value
+                            var progressValue_{{ assignment.id }} = {{ assignment.progress }};
+                            updateProgressBar(progressValue_{{ assignment.id }}, 'progressBar_{{ assignment.id }}');
+                        </script>
+
+
+                    {% endfor %}
+                </div>
+        {% endif %}
+        </div>
+
+        <div class="fixed-bottom text-right mx-5 mb-3 d-flex flex-column align-items-end">
+            <a href="{% url 'add_task' %}" class="btn btn-primary px-4 mb-2">Add New Task</a>
+            <a href="{% url 'add_assignment_task' %}" class="btn btn-primary px-4 mb-2">Add New Assignment</a>
+        </div>
 
         </div>
 
@@ -100,3 +186,5 @@
 
 
 {% endblock %}
+
+

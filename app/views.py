@@ -9,9 +9,10 @@ from django.contrib.auth import login, authenticate, logout as auth_logout
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, ReminderForm, QuestionForm, AssignmentForm, \
     TaskForm, TaskAssignmentForm
 from urllib.parse import urlparse
-
+from django.contrib import messages
 # Create your views here.
 from app.models import Comment, Assignment, Task, Reminder, Question
+import logging
 
 
 def your_view(request):
@@ -19,8 +20,8 @@ def your_view(request):
     current_datetime = timezone.now()
     end_date_limit = current_date + timedelta(days=5)
 
-    assignments = Assignment.objects.filter(due_date__lte=end_date_limit)
-    active_reminders = Reminder.objects.filter(deadline__gt=current_datetime)
+    assignments = Assignment.objects.filter(due_date__lte=end_date_limit, user = request.user)
+    active_reminders = Reminder.objects.filter(deadline__gt=current_datetime, user = request.user)
 
     nearest_reminder = active_reminders.order_by('deadline').first() if active_reminders.exists() else None
     assignment_least_progress = assignments.order_by('progress').first() if assignments.exists() else None
@@ -37,11 +38,12 @@ def user_logout(request):
     return redirect('home')
 
 
+
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             return redirect('login')
     else:
         form = CustomUserCreationForm()
@@ -65,10 +67,13 @@ def user_login(request):
 
 @login_required
 def assignments_all(request):
+    current_datetime = timezone.now()
     user = request.user
-    queryset = Assignment.objects.filter(user=user)
+    upcoming_assignments = Assignment.objects.filter(user=user, due_date__gt=current_datetime)
+    past_assignments = Assignment.objects.filter(user=user, due_date__lte=current_datetime)
+
     tasks = Task.objects.all()
-    context = {"assignments": queryset, "tasks": tasks}
+    context = {"upcoming_assignments": upcoming_assignments, "past_assignments":past_assignments, "tasks": tasks}
     return render(request, "assignments.html", context=context)
 
 
@@ -132,8 +137,14 @@ def add_reminder(request):
     if request.method == 'POST':
         form = ReminderForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('reminders')  # Replace 'reminder_list' with the URL name for your reminder list view
+            reminder = form.save(commit=False)
+
+            reminder.user = request.user
+
+            reminder.save()
+
+            messages.success(request, 'Reminder added successfully.')
+            return redirect('reminders')
     else:
         form = ReminderForm()
 
@@ -167,6 +178,8 @@ def edit_reminder(request, name=None):
         form = ReminderForm(request.POST, instance=reminder)
         if form.is_valid():
             form.save()
+
+            messages.success(request, 'Reminder edited successfully.')
             return redirect('reminders')
     else:
         form = ReminderForm(instance=reminder)
