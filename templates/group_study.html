@@ -5,6 +5,13 @@
         <div class="container">
             <div class="text-center">
                 <h1 class="primary-text"> Group Study </h1>
+                {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success mt-3">
+                                {{ message|safe }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 <div class="d-flex justify-content-center align-items-center my-3">
                     <span class="text-warning">Having difficulties? Other people are here to help!</span>
                     <a href="{% url 'ask_question' %}" class="btn btn-primary ml-2">Ask a Question</a>

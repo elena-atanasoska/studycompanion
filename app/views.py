@@ -13,22 +13,25 @@ from django.contrib import messages
 # Create your views here.
 from app.models import Comment, Assignment, Task, Reminder, Question, CustomUser
 import logging
-
+from datetime import date
 
 def your_view(request):
     user = get_object_or_404(CustomUser, id=int(request.user.id)) if request.user.is_authenticated else None
 
     current_date = date.today()
+    current_datetime = timezone.now()
 
     active_assignments = Assignment.objects.filter(user=user, due_date__gte=current_date)
+    active_reminders = Reminder.objects.filter(user=user, deadline__gt=current_datetime)
+
+    nearest_reminder = active_reminders.order_by('deadline').first() if active_reminders.exists() else None
 
     assignment_least_progress = active_assignments.order_by('progress').first() if active_assignments.exists() else None
     assignment_most_progress = active_assignments.order_by('-progress').first() if active_assignments.exists() else None
 
     return render(request, 'index.html',
                   {'user': request.user, 'assignment_least_progress': assignment_least_progress,
-                   'assignment_most_progress': assignment_most_progress})
-
+                   'assignment_most_progress': assignment_most_progress, 'nearest_reminder': nearest_reminder})
 
 def user_logout(request):
     auth_logout(request)
@@ -91,7 +94,7 @@ def add_assignment_task(request):
     else:
         form = AssignmentForm()
 
-    return render(request, 'add_assignment_task.html', {'form': form})
+    return render(request, 'add_assignment_task.html', {'form': form, 'today_date': date.today()})
 
 
 def about(request):
@@ -164,7 +167,7 @@ def add_reminder(request):
     else:
         form = ReminderForm()
 
-    return render(request, 'add_reminder.html', {'form': form})
+    return render(request, 'add_reminder.html', {'form': form, 'today_date': datetime.now()})
 
 
 def reminder_details(request, name):
@@ -253,6 +256,7 @@ def ask_question(request):
             question = form.save(commit=False)
             question.user = request.user
             question.save()
+            messages.success(request, 'Your question was posted.')
             return redirect('group_study')  # Redirect to the group study page after asking a question
     else:
         form = QuestionForm()

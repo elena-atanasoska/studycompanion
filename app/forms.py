@@ -49,6 +49,8 @@ class AssignmentForm(forms.ModelForm):
         super(AssignmentForm, self).__init__(*args, **kwargs)
         for field in self.visible_fields():
             field.field.widget.attrs["class"] = "form-control"
+        self.fields['name'].widget.attrs['placeholder'] = 'e.g. Assignment 1'
+        self.fields['description'].widget.attrs['placeholder'] = 'e.g. Complete exercise 2 and 3...'
 
     def as_bootstrap(self):
         for name, field in self.fields.items():
@@ -79,6 +81,8 @@ class ReminderForm(forms.ModelForm):
         super(ReminderForm, self).__init__(*args, **kwargs)
         for field in self.visible_fields():
             field.field.widget.attrs["class"] = "form-control"
+        self.fields['name'].widget.attrs['placeholder'] = 'e.g. Reminder 1'
+        self.fields['description'].widget.attrs['placeholder'] = 'e.g. Submit homework assignment "Neural Networks" '
 
 
 class QuestionForm(forms.ModelForm):

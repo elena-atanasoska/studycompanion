@@ -2,9 +2,6 @@
 
 {% block content %}
     <div class="content-container">
-        <div class="fixed-bottom text-right mx-5 mb-3">
-            <a href="{% url 'add_reminder' %}" class="btn btn-primary px-4">Add New Reminder</a>
-        </div>
 
         {% if user.is_authenticated %}
             <div>
@@ -24,6 +21,9 @@
                     </div>
                     </div>
                 {% else %}
+                    <div class="fixed-bottom text-right mx-5 mb-3">
+                        <a href="{% url 'add_reminder' %}" class="btn btn-primary px-4">Add New Reminder</a>
+                    </div>
                     <div class="text-center my-3">
                         <h1 class="primary-text" style="font-size: xxx-large"> My Reminders </h1>
                     </div>
