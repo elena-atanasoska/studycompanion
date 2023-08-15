@@ -2,17 +2,13 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <div class="container my-5">
-            <div class="text-center my-5">
+        <div class="container">
+            <div class="text-center">
                 <h1 class="primary-text"> Group Study </h1>
-            </div>
-
-            <div class="text-center my-3" style="font-size: x-large;">
-                <span class="text-warning"> Having difficulties? Other people are here to help! </span>
-            </div>
-
-             <div class="row text-center mx-auto py-4" style="max-width: 300px">
-                <a href="{% url 'ask_question' %}" class="btn btn-primary px-4 mt-2">Ask a Question</a>
+                <div class="d-flex justify-content-center align-items-center my-3">
+                    <span class="text-warning">Having difficulties? Other people are here to help!</span>
+                    <a href="{% url 'ask_question' %}" class="btn btn-primary ml-2">Ask a Question</a>
+                </div>
             </div>
 
             <div class="row justify-content-center">
@@ -21,7 +17,8 @@
                         <div class="card mb-3 navcolor-border shadow" style="border-width: 4px; border-radius:15px;">
                             <div class="row g-0">
                                 <div class="col-md-4 d-flex align-items-center flex-column justify-content-center">
-                                    <img src="http://127.0.0.1:8000/static/user.png" class="img-fluid rounded-start" alt="User Image" style="max-width: 100px; max-height: 100px;">
+                                    <img src="http://127.0.0.1:8000/static/user.png" class="img-fluid rounded-start"
+                                         alt="User Image" style="max-width: 100px; max-height: 100px;">
                                     <p class="card-text primary-text ml-2">{{ question.user }} </p>
                                 </div>
                                 <div class="col-md-8">

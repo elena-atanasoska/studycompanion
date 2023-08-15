@@ -7,7 +7,7 @@
 {% block content %}
     {% if user.is_authenticated %}
         <div class="container">
-            <a href="{% url 'assignment_details' name=assignment.id %}" class="btn btn-outline-secondary">Go Back</a>
+            <a data-toggle="modal" data-target="#cancelEditModal" class="btn btn-outline-secondary">Go Back</a>
             <h1 class="text-center primary-text my-5">Edit Assignment</h1>
             <form method="post" style="max-width: 400px" class="mx-auto">
                 {% csrf_token %}
@@ -31,31 +31,40 @@
                     <label class="form-label">Due date <span class="text-danger">*</span></label>
                     <input type="text" class="form-control datepicker" id="id_due_date" name="due_date">
                 </div>
-                <div class="mb-3"> <span class="text-danger">These fields are required.</span></div>
+                <div class="mb-3"><span class="text-danger">These fields are required.</span></div>
 
-{#                        {% for task in tasks %}#}
-{#                            <li>#}
-{#                                {{ task.name }} -#}
-{#                                <input type="checkbox" name="task_{{ task.id }}" {% if task.is_finished %}checked{% endif %}>#}
-{#                                <a href="{% url 'edit_task' task.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>#}
-{#                                <a href="{% url 'delete_task' task.id %}" class="btn btn-outline-danger btn-sm">Delete</a>#}
-{#                            </li>#}
-{#                        {% endfor %}#}
-{#                    <div class="mb-3">#}
-{#                        <label class="form-label">Tasks (one per line):</label>#}
-{#                        <textarea name="tasks" class="form-control" rows="3">{{ form.tasks.value }}</textarea>#}
-{#                    </div>#}
-                <p class="text-success">Note: If you want to edit the tasks for this assignment, go to previous page and click on the task you want to edit.</p>
-
-
+                <p class="text-success">Note: If you want to edit the tasks for this assignment, go to previous page and
+                    click on the task you want to edit.</p>
                 <div class="text-right">
                     <input type="submit" value="Save" class="btn btn-primary mt-2">
                 </div>
             </form>
         </div>
 
+        <div class="modal fade" id="cancelEditModal" tabindex="-1" role="dialog" aria-labelledby="cancelEditModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cancelEditModalLabel">Confirm Cancel</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to cancel editing? Any unsaved changes will be lost.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Continue Editing
+                        </button>
+                        <a href="{% url 'assignment_details' name=assignment.id %}" class="btn btn-danger">Yes, Cancel
+                            Editing</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function () {
                 flatpickr(".datepicker", {
                     dateFormat: "Y-m-d",
                     minDate: "today"

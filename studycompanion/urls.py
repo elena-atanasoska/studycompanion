@@ -46,5 +46,6 @@ urlpatterns = [
     path('task_details/<str:task_name>/', views.task_details, name='task_details'),
     path('edit_task/<str:name>/', views.edit_task, name='edit_task'),
     path('delete_task/<str:name>/', views.delete_task, name='delete_task'),
-    path('add_task/', views.add_task, name='add_task')
+    path('add_task/', views.add_task, name='add_task'),
+    path('access-denied/', views.access_denied, name='access_denied'),
 ]

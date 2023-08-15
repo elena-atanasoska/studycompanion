@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import F, ExpressionWrapper
@@ -16,29 +16,23 @@ import logging
 
 
 def your_view(request):
-    current_date = datetime.now().date()
-    current_datetime = timezone.now()
-    end_date_limit = current_date + timedelta(days=5)
-
     user = get_object_or_404(CustomUser, id=int(request.user.id)) if request.user.is_authenticated else None
 
-    assignments = Assignment.objects.filter(user=user, due_date__lte=end_date_limit)
-    active_reminders = Reminder.objects.filter(user=user, deadline__gt=current_datetime)
+    current_date = date.today()
 
-    nearest_reminder = active_reminders.order_by('deadline').first() if active_reminders.exists() else None
-    assignment_least_progress = assignments.order_by('progress').first() if assignments.exists() else None
-    assignment_most_progress = assignments.order_by('-progress').first() if assignments.exists() else None
+    active_assignments = Assignment.objects.filter(user=user, due_date__gte=current_date)
+
+    assignment_least_progress = active_assignments.order_by('progress').first() if active_assignments.exists() else None
+    assignment_most_progress = active_assignments.order_by('-progress').first() if active_assignments.exists() else None
 
     return render(request, 'index.html',
-                  {'user': request.user, 'assignments': assignments, 'nearest_reminder': nearest_reminder,
-                   'assignment_least_progress': assignment_least_progress,
-                   'assignment_most_progress': assignment_most_progress, })
+                  {'user': request.user, 'assignment_least_progress': assignment_least_progress,
+                   'assignment_most_progress': assignment_most_progress})
 
 
 def user_logout(request):
     auth_logout(request)
     return redirect('home')
-
 
 
 def register(request):
@@ -71,11 +65,11 @@ def user_login(request):
 def assignments_all(request):
     current_datetime = timezone.now()
     user = request.user
-    upcoming_assignments = Assignment.objects.filter(user=user, due_date__gt=current_datetime)
-    past_assignments = Assignment.objects.filter(user=user, due_date__lte=current_datetime)
+    upcoming_assignments = Assignment.objects.filter(user=user, due_date__gt=current_datetime).order_by('due_date')
+    past_assignments = Assignment.objects.filter(user=user, due_date__lte=current_datetime).order_by('-due_date')
 
     tasks = Task.objects.all()
-    context = {"upcoming_assignments": upcoming_assignments, "past_assignments":past_assignments, "tasks": tasks}
+    context = {"upcoming_assignments": upcoming_assignments, "past_assignments": past_assignments, "tasks": tasks}
     return render(request, "assignments.html", context=context)
 
 
@@ -109,8 +103,12 @@ def contact(request):
 
 
 def assignment_details(request, name):
-    assignment = Assignment.objects.get(id=name)
-    tasks = Task.objects.all()
+    assignment = get_object_or_404(Assignment, id=name)
+    tasks = Task.objects.filter(assignment=assignment)
+
+    if not assignment.user == request.user:
+        return redirect('access_denied')
+
     source = None
     referer = request.META.get('HTTP_REFERER')
     if referer:
@@ -121,12 +119,22 @@ def assignment_details(request, name):
     return render(request, "assignment_details.html", context=context)
 
 
+def access_denied(request):
+    return render(request, "access_denied.html")
+
+
+@login_required
 def delete_assignment(request, name):
-    assignment = Assignment.objects.get(id=name)
+    assignment = get_object_or_404(Assignment, id=name)
+
+    if not assignment.user == request.user:
+        return redirect('access_denied')
+
     if request.method == 'POST':
         assignment.delete()
         messages.success(request, 'Assignment deleted successfully.')
         return redirect('assignments')
+
     return render(request, 'delete_assignment.html', {'assignment': assignment})
 
 
@@ -134,10 +142,11 @@ def delete_assignment(request, name):
 def reminders_all(request):
     user = request.user
     current_datetime = timezone.now()
-    active_reminders = Reminder.objects.filter(user=user, deadline__gt=current_datetime)
-    expired_reminders = Reminder.objects.filter(user=user, deadline__lte=current_datetime)
+    active_reminders = Reminder.objects.filter(user=user, deadline__gt=current_datetime).order_by('deadline')
+    expired_reminders = Reminder.objects.filter(user=user, deadline__lte=current_datetime).order_by('deadline')
 
-    return render(request, 'reminders.html', {'active_reminders': active_reminders, 'expired_reminders': expired_reminders})
+    return render(request, 'reminders.html',
+                  {'active_reminders': active_reminders, 'expired_reminders': expired_reminders})
 
 
 def add_reminder(request):
@@ -159,7 +168,11 @@ def add_reminder(request):
 
 
 def reminder_details(request, name):
-    reminder = Reminder.objects.get(id=name)
+    reminder = get_object_or_404(Reminder, id=name)
+
+    if not reminder.user == request.user:
+        return redirect('access_denied')
+
     source = None
     referer = request.META.get('HTTP_REFERER')
     if referer:
@@ -171,16 +184,24 @@ def reminder_details(request, name):
 
 
 def delete_reminder(request, name):
-    reminder = Reminder.objects.get(id=name)
+    reminder = get_object_or_404(Reminder, id=name)
+
+    if not reminder.user == request.user:
+        return redirect('access_denied')
+
     if request.method == 'POST':
         reminder.delete()
         messages.success(request, 'Reminder deleted successfully.')
         return redirect('reminders')
+
     return render(request, 'delete_reminder.html', {'reminder': reminder})
 
 
 def edit_reminder(request, name=None):
-    reminder = Reminder.objects.get(id=name)
+    reminder = get_object_or_404(Reminder, id=name)
+
+    if not reminder.user == request.user:
+        return redirect('access_denied')
 
     if request.method == 'POST':
         form = ReminderForm(request.POST, instance=reminder)
@@ -196,7 +217,11 @@ def edit_reminder(request, name=None):
 
 
 def edit_assignment(request, name=None):
-    assignment = Assignment.objects.get(id=name)
+    assignment = get_object_or_404(Assignment, id=name)
+
+    if not assignment.user == request.user:
+        return redirect('access_denied')
+
     tasks = assignment.tasks.all()
 
     if request.method == 'POST':
@@ -204,6 +229,7 @@ def edit_assignment(request, name=None):
         if form.is_valid():
             tasks_text = form.cleaned_data.get('tasks', '')
             task_names = [task.strip() for task in tasks_text.split('\n') if task.strip()]
+            Task.objects.filter(assignment=assignment).delete()  # Delete existing tasks
             for task_name in task_names:
                 Task.objects.create(name=task_name, assignment=assignment)
             form.save()
@@ -239,7 +265,10 @@ def chat(request):
 
 
 def edit_task(request, name):
-    task = Task.objects.get(id=name)
+    task = get_object_or_404(Task, id=name)
+
+    if not task.assignment.user == request.user:
+        return redirect('access_denied')
 
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
@@ -255,16 +284,25 @@ def edit_task(request, name):
 
 
 def delete_task(request, name):
-    task = Task.objects.get(id=name)
+    task = get_object_or_404(Task, id=name)
+
+    if not task.assignment.user == request.user:
+        return redirect('access_denied')
+
     if request.method == 'POST':
         task.delete()
         messages.success(request, 'Task deleted successfully.')
         return redirect('assignments')
+
     return render(request, 'delete_task.html', {'task': task})
 
 
 def task_details(request, task_name):
     task = get_object_or_404(Task, id=task_name)
+
+    if not task.assignment.user == request.user:
+        return redirect('access_denied')
+
     context = {'task': task}
     return render(request, 'task_details.html', context)
 

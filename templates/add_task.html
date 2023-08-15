@@ -5,31 +5,59 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-
-        <h1 class="text-center primary-text my-5">Add New Task</h1>
-        <form method="post" style="max-width: 400px" class="mx-auto">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label class="form-label">Name <span class="text-danger">*</span></label>
+    {% if user.is_authenticated %}
+        <div class="container">
+            <h1 class="text-center primary-text my-5">Add New Task</h1>
+            <form method="post" style="max-width: 400px" class="mx-auto">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Name <span class="text-danger">*</span></label>
                     {{ form.name }}
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Assignment <span class="text-danger">*</span></label>
-                        {{ form.assignment }}
-            </div>
-            <div class="mb-3"> <span class="text-danger">These fields are required.</span></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Assignment <span class="text-danger">*</span></label>
+                    {{ form.assignment }}
+                </div>
+                <div class="mb-3"><span class="text-danger">These fields are required.</span></div>
 
-            <p class="text-success mt-4">When you add a Task, by default it is not finished. When you finish it
-                and want to change that you can do so by editing the task. :)</p>
-            <div class="row">
-                <div class="col-md-6 text-left">
-                    <a href="{% url 'assignments' %}" class="btn btn-secondary mt-2">Cancel</a>
+                <p class="text-success mt-4">When you add a Task, by default it is not finished. When you finish it
+                    and want to change that you can do so by editing the task. :)</p>
+                <div class="row">
+                    <div class="col-md-6 text-left">
+                        <button type="button" class="btn btn-secondary mt-2" data-toggle="modal"
+                                data-target="#cancelModal">Cancel
+                        </button>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <input type="submit" value="Save" class="btn btn-primary mt-2">
+                    </div>
                 </div>
-                <div class="col-md-6 text-right">
-                    <input type="submit" value="Save" class="btn btn-primary mt-2">
+            </form>
+        </div>
+
+        <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cancelModalLabel">Confirm Cancel</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to cancel? If you proceed, any unsaved progress will be lost.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Keep Editing</button>
+                        <a href="{% url 'assignments' %}" class="btn btn-danger">Yes, Cancel</a>
+                    </div>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+
+    {% else %}
+        {% include "unauthenticated_message.html" %}
+    {% endif %}
+
 {% endblock %}

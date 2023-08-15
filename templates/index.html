@@ -7,15 +7,15 @@
 {% block content %}
 
     {% if user.is_authenticated %}
-        <div class="text-center my-5">
+        <div class="text-center">
             <h1 class="primary-text"> Welcome back, {{ user.name }}! </h1>
             <h2 class="text-warning"> Today you need to work on: </h2>
         </div>
         <div class="container">
 
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    {% if assignment_most_progress %}
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                {% if assignment_most_progress %}
                     <div class="mb-2 mt-3">
                         <p class="h5 text-success"><i class="fas fa-check-circle text-success"></i> You have done
                             significant progress on:</p>
@@ -24,7 +24,7 @@
                         <div class="card-body">
                             <h5 class="card-title text-success">{{ assignment_most_progress.name }}</h5>
                             <p class="card-text"><i>Course:</i> {{ assignment_most_progress.course }}</p>
-                            <p class="card-text"><i>Progress:</i> {{ assignment_most_progress.progress }}</p>
+                            <p class="card-text"><i>Progress:</i> {{ assignment_most_progress.progress }}0%</p>
                             <p class="card-text">{{ assignment_most_progress.description }}</p>
                             <div class="text-right">
                                 <a href="{% url 'assignment_details' name=assignment_most_progress.id %}"
@@ -32,13 +32,13 @@
                             </div>
                         </div>
                     </div>
-                        {% else %}
-                        <div class="mb-2 mt-3 text-center">
+                {% else %}
+                    <div class="mb-2 mt-3 text-center">
                         <p class="h5 text-danger"> You have no assignments.</p>
                         <a href="{% url 'add_assignment_task' %}" class="btn btn-primary px-4">Add New Assignment</a>
                     </div>
-                    {% endif %}
-                    {% if assignment_least_progress %}
+                {% endif %}
+                {% if assignment_least_progress %}
                     <div class="mb-2 mt-4">
                         <p class="h5 text-warning"><i class="fas fa-exclamation-circle text-warning"></i> You need to
                             focus more on:</p>
@@ -55,14 +55,14 @@
                             </div>
                         </div>
                     </div>
-                    {% endif %}
-                </div>
-                {% if nearest_reminder %}
+                {% endif %}
+            </div>
+            {% if nearest_reminder %}
                 <div class="col-md-6 mb-4 mt-5">
                     <div class="alert alert-warning rounded-pill mx-auto" role="alert" style="max-width: 400px;">
                         <div class="d-flex align-items-center">
                             <i class="fas fa-exclamation-circle mr-2" style="font-size: 24px; color: #f39c12;"></i>
-                            <span class="font-weight-bold">Warning! </span> You have an upcoming reminder!
+                            <span class="font-weight-bold">Warning!</span>&nbsp;<span>You have an upcoming reminder!</span>
                         </div>
                     </div>
                     <div class="card border-danger shadow-lg mx-auto" style="width: 18rem;">
@@ -79,11 +79,11 @@
                         </div>
                     </div>
                 </div>
-                    {% else %}
-                        <div class="col-md-6 mb-4 mt-3 text-center">
-                        <p class="h5 text-danger"> You have no reminders.</p>
-                        <a href="{% url 'add_reminder' %}" class="btn btn-primary px-4">Add New Reminder</a>
-                {% endif %}
+            {% else %}
+                <div class="col-md-6 mb-4 mt-3 text-center">
+                <p class="h5 text-danger"> You have no reminders.</p>
+                <a href="{% url 'add_reminder' %}" class="btn btn-primary px-4">Add New Reminder</a>
+            {% endif %}
             </div>
 
 
@@ -259,7 +259,6 @@
             </p>
             <a href="/register/" class="btn btn-primary btn-lg">Get Started</a>
         </div>
-
     {% endif %}
 
 {% endblock %}
