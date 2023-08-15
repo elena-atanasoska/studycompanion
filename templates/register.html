@@ -8,6 +8,15 @@
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                     <h1 class="mb-3">Register</h1>
+                    {% if messages %}
+                    <div class="alert alert-success">
+                        <ul>
+                            {% for message in messages %}
+                            <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
                     <form method="post">
                         {% csrf_token %}
                         <!-- Username input -->
