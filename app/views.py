@@ -43,6 +43,7 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            messages.success(request, 'Registration successful. You can now log in.')
             return redirect('login')
     else:
         form = CustomUserCreationForm()
@@ -59,6 +60,10 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 return redirect('home')
+            else:
+                messages.error(request, 'Login failed. Please check your credentials and try again.')
+        else:
+            messages.error(request, 'Login failed. Please check the form and try again.')
     else:
         form = CustomAuthenticationForm()
     return render(request, 'login.html', {'form': form})
