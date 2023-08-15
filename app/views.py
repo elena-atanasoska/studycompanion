@@ -22,8 +22,8 @@ def your_view(request):
 
     user = get_object_or_404(CustomUser, id=int(request.user.id)) if request.user.is_authenticated else None
 
-    assignments = Assignment.objects.filter(due_date__lte=end_date_limit)
-    active_reminders = Reminder.objects.filter(deadline__gt=current_datetime)
+    assignments = Assignment.objects.filter(user=user, due_date__lte=end_date_limit)
+    active_reminders = Reminder.objects.filter(user=user, deadline__gt=current_datetime)
 
     nearest_reminder = active_reminders.order_by('deadline').first() if active_reminders.exists() else None
     assignment_least_progress = assignments.order_by('progress').first() if assignments.exists() else None
@@ -207,6 +207,7 @@ def edit_assignment(request, name=None):
             for task_name in task_names:
                 Task.objects.create(name=task_name, assignment=assignment)
             form.save()
+            messages.success(request, 'Assignment edited successfully.')
             return redirect('assignments')
     else:
         form = AssignmentForm(instance=assignment)
@@ -244,6 +245,7 @@ def edit_task(request, name):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Task edited successfully.')
             return redirect('assignments')
     else:
         form = TaskForm(instance=task)
