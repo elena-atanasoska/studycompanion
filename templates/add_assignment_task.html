@@ -29,7 +29,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Due date <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control datepicker" id="id_due_date" name="due_date" required>
+                        <input type="text" class="form-control datepicker" id="id_due_date" name="due_date" required
+                            value="{{ today_date|date:'Y-m-d' }}" placeholder="{{ today_date|date:'Y-m-d' }}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tasks (one per line): </label>

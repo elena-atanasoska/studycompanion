@@ -47,7 +47,7 @@
                         <div class="card-body">
                             <h5 class="card-title text-warning">{{ assignment_least_progress.name }}</h5>
                             <p class="card-text"><i>Course:</i> {{ assignment_least_progress.course }}</p>
-                            <p class="card-text"><i>Progress:</i> {{ assignment_least_progress.progress }}</p>
+                            <p class="card-text"><i>Progress:</i> {{ assignment_least_progress.progress }}0%</p>
                             <p class="card-text">{{ assignment_least_progress.description }}</p>
                             <div class="text-right">
                                 <a href="{% url 'assignment_details' name=assignment_least_progress.id %}"
@@ -159,6 +159,9 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>
+                    </div>
+                    <div class="text-center">
+                        <a href="https://www.bbc.com/news/technology" class="btn btn-outline-primary btn-lg btn-block mt-4" style="max-width: 400px">Explore Cutting-Edge Tech News</a>
                     </div>
                 </div>
             </div>

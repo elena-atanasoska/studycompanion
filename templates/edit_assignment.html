@@ -29,7 +29,8 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Due date <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control datepicker" id="id_due_date" name="due_date">
+                    <input type="text" class="form-control datepicker" id="id_due_date" name="due_date"
+                        value="{{ assignment.due_date|date:'Y-m-d' }}" placeholder="{{ assignment.due_date|date:'Y-m-d' }}">
                 </div>
                 <div class="mb-3"><span class="text-danger">These fields are required.</span></div>
 
