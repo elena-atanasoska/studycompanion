@@ -12,13 +12,14 @@
             <h2 class="text-warning"> Today you need to work on: </h2>
         </div>
         <div class="container">
+
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    <div class="mb-2">
+                    <div class="mb-2 mt-3">
                         <p class="h5 text-success"><i class="fas fa-check-circle text-success"></i> You have done
                             significant progress on:</p>
                     </div>
-                    <div class="card border-success">
+                    <div class="card border-success mb-3">
                         <div class="card-body">
                             <h5 class="card-title text-success">{{ assignment_most_progress.name }}</h5>
                             <p class="card-text"><i>Course:</i> {{ assignment_most_progress.course }}</p>
@@ -30,9 +31,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="mb-2">
+                    <div class="mb-2 mt-4">
                         <p class="h5 text-warning"><i class="fas fa-exclamation-circle text-warning"></i> You need to
                             focus more on:</p>
                     </div>
@@ -49,17 +48,14 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row d-flex justify-content-center align-items-center mx-auto">
-                <div class="col-md-6">
-                    <div class="alert alert-warning rounded-pill" role="alert" style="max-width: 400px;">
+                <div class="col-md-6 mb-4 mt-5">
+                    <div class="alert alert-warning rounded-pill mx-auto" role="alert" style="max-width: 400px;">
                         <div class="d-flex align-items-center">
                             <i class="fas fa-exclamation-circle mr-2" style="font-size: 24px; color: #f39c12;"></i>
                             <span class="font-weight-bold">Warning! </span> You have an upcoming reminder!
                         </div>
                     </div>
-                    <div class="card border-danger shadow-lg" style="width: 18rem;">
+                    <div class="card border-danger shadow-lg mx-auto" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title text-danger">{{ nearest_reminder.name }}</h5>
                             <p class="card-text"><i>Course:</i> {{ nearest_reminder.course }}</p>
@@ -74,6 +70,9 @@
                     </div>
                 </div>
             </div>
+
+
+
             <div class="row mt-4">
                 <div class="col-md-12">
                     <h2 class="text-info mb-4 text-center"

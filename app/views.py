@@ -133,8 +133,11 @@ def delete_assignment(request, name):
 @login_required
 def reminders_all(request):
     user = request.user
-    reminders = Reminder.objects.filter(user=user)
-    return render(request, 'reminders.html', {'reminders': reminders})
+    current_datetime = timezone.now()
+    active_reminders = Reminder.objects.filter(user=user, deadline__gt=current_datetime)
+    expired_reminders = Reminder.objects.filter(user=user, deadline__lte=current_datetime)
+
+    return render(request, 'reminders.html', {'active_reminders': active_reminders, 'expired_reminders': expired_reminders})
 
 
 def add_reminder(request):
