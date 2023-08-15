@@ -35,10 +35,12 @@
                         <label class="form-label">Tasks (one per line): </label>
                         <textarea name="tasks" class="form-control" rows="3">{{ form.tasks.value }}</textarea>
                     </div>
-                    <div class="mb-3"> <span class="text-danger">These fields are required.</span></div>
+                    <div class="mb-3"><span class="text-danger">These fields are required.</span></div>
                     <div class="row">
                         <div class="col-md-6 text-left">
-                            <a href="{% url 'assignments' %}" class="btn btn-secondary mt-2">Cancel</a>
+                            <button type="button" class="btn btn-secondary mt-2" data-toggle="modal"
+                                    data-target="#cancelModal">Cancel
+                            </button>
                         </div>
                         <div class="col-md-6 text-right">
                             <input type="submit" value="Save" class="btn btn-primary mt-2">
@@ -48,8 +50,29 @@
             </div>
         </div>
 
+        <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cancelModalLabel">Confirm Cancel</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to cancel? If you proceed, any unsaved progress will be lost.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Keep Editing</button>
+                        <a href="{% url 'assignments' %}" class="btn btn-danger">Yes, Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function () {
                 flatpickr(".datepicker", {
                     dateFormat: "Y-m-d",
                     minDate: "today"

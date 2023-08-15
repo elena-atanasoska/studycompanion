@@ -7,7 +7,7 @@
 {% block content %}
     {% if user.is_authenticated %}
         <div class="container">
-            <a href="{% url 'reminder_details' name=reminder.id %}" class="btn btn-outline-secondary">Go Back</a>
+            <a data-toggle="modal" data-target="#cancelEditModal" class="btn btn-outline-secondary">Go Back</a>
             <h1 class="text-center primary-text my-5">Edit Reminder</h1>
             <form method="post" style="max-width: 400px" class="mx-auto">
                 {% csrf_token %}
@@ -32,6 +32,29 @@
                     <input type="submit" value="Save" class="btn btn-primary mt-2">
                 </div>
             </form>
+        </div>
+
+        <div class="modal fade" id="cancelEditModal" tabindex="-1" role="dialog" aria-labelledby="cancelEditModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cancelEditModalLabel">Confirm Cancel</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to cancel editing? Any unsaved changes will be lost.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Continue Editing
+                        </button>
+                        <a href="{% url 'reminder_details' name=reminder.id %}" class="btn btn-danger">Yes, Cancel
+                            Editing</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script>

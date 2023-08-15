@@ -14,96 +14,115 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
 </head>
 
-    <style>
-        .navcolor {
-            background-color: #4445a2;
+<style>
+
+
+    .navcolor {
+        background-color: #4445a2;
+    }
+
+    .navbar .nav-link {
+        color: white;
+    }
+
+    .navcolor-border {
+        border: 2px solid #4445a2;
+    }
+
+
+    .primary-text {
+        color: #19217BFF;
+    }
+
+    .chat-online {
+        color: #34ce57
+    }
+
+    .chat-offline {
+        color: #e4606d
+    }
+
+    .chat-messages {
+        display: flex;
+        flex-direction: column;
+        max-height: 800px;
+        overflow-y: scroll
+    }
+
+    .chat-message-left,
+    .chat-message-right {
+        display: flex;
+        flex-shrink: 0
+    }
+
+    .chat-message-left {
+        margin-right: auto
+    }
+
+    .chat-message-right {
+        flex-direction: row-reverse;
+        margin-left: auto
+    }
+
+    .py-3 {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+
+    .px-4 {
+        padding-right: 1.5rem !important;
+        padding-left: 1.5rem !important;
+    }
+
+    .flex-grow-0 {
+        flex-grow: 0 !important;
+    }
+
+    .border-top {
+        border-top: 1px solid #dee2e6 !important;
+    }
+
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .loading-spinner {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid #fff;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
         }
-
-        .navbar .nav-link {
-            color: white;
+        100% {
+            transform: rotate(360deg);
         }
+    }
 
-        .navcolor-border {
-            border: 2px solid #4445a2; /* Replace #ff0000 with your desired border color in hexadecimal */
-        }
+    .content-container {
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100vh - 392px);
+    }
 
-
-        .primary-text {
-            color: #19217BFF;
-        }
-
-        .chat-online {
-    color: #34ce57
-}
-
-.chat-offline {
-    color: #e4606d
-}
-
-.chat-messages {
-    display: flex;
-    flex-direction: column;
-    max-height: 800px;
-    overflow-y: scroll
-}
-
-.chat-message-left,
-.chat-message-right {
-    display: flex;
-    flex-shrink: 0
-}
-
-.chat-message-left {
-    margin-right: auto
-}
-
-.chat-message-right {
-    flex-direction: row-reverse;
-    margin-left: auto
-}
-.py-3 {
-    padding-top: 1rem!important;
-    padding-bottom: 1rem!important;
-}
-.px-4 {
-    padding-right: 1.5rem!important;
-    padding-left: 1.5rem!important;
-}
-.flex-grow-0 {
-    flex-grow: 0!important;
-}
-.border-top {
-    border-top: 1px solid #dee2e6!important;
-}
-
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* Make sure it's above other elements */
-}
-
-/* Style for the spinner */
-.loading-spinner {
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-top: 4px solid #fff;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-    </style>
+    .footer {
+        margin-top: auto;
+    }
+</style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navcolor text-white">
@@ -153,42 +172,42 @@
 </nav>
 
 <div class="mt-4">
-            <div class="loading-overlay">
-                <div class="loading-spinner"></div>
-            </div>
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
     {% block content %}
     {% endblock %}
 </div>
 
 
-<footer class="navcolor text-white py-4 mt-5">
-    {% if user.is_authenticated  %}
-    <div class="container text-center">
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-6">
-                <h5>About Us</h5>
-                <p>Learn more about our team and mission.</p>
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="/about/" class="text-white">Read more</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <h5>Contact</h5>
-                <p>Get in touch with us for any inquiries.</p>
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="/contact/" class="text-white">Contact us</a>
-                    </li>
-                </ul>
+<footer class="navcolor text-white py-4 mt-5 footer">
+    {% if user.is_authenticated %}
+        <div class="container text-center">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6">
+                    <h5>About Us</h5>
+                    <p>Learn more about our team and mission.</p>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="/about/" class="text-white">Read more</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5>Contact</h5>
+                    <p>Get in touch with us for any inquiries.</p>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="/contact/" class="text-white">Contact us</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container mt-4 text-center">
-        <p>&copy; {{ year }} Study Companion. All rights reserved.</p>
-        <p>Designed with <i class="fas fa-heart text-danger"></i> by Elena, Bojana, and Iva</p>
-    </div>
+        <div class="container mt-4 text-center">
+            <p>&copy; {{ year }} Study Companion. All rights reserved.</p>
+            <p>Designed with <i class="fas fa-heart text-danger"></i> by Elena, Bojana, and Iva</p>
+        </div>
     {% else %}
         <div class="container mt-4 text-center">
             <p>&copy; {{ year }} Study Companion. All rights reserved.</p>
@@ -204,27 +223,27 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-        // Initialize Flatpickr for the deadline field with datetime picker
-        flatpickr('.datetimepicker', {
-            enableTime: true,
-            dateFormat: 'Y-m-d H:i',
-        });
+    // Initialize Flatpickr for the deadline field with datetime picker
+    flatpickr('.datetimepicker', {
+        enableTime: true,
+        dateFormat: 'Y-m-d H:i',
+    });
 
 
-        function showLoadingSpinner() {
-            document.querySelector('.loading-overlay').style.display = 'flex';
-        }
+    function showLoadingSpinner() {
+        document.querySelector('.loading-overlay').style.display = 'flex';
+    }
 
-        function hideLoadingSpinner() {
-            document.querySelector('.loading-overlay').style.display = 'none';
-        }
+    function hideLoadingSpinner() {
+        document.querySelector('.loading-overlay').style.display = 'none';
+    }
 
-        showLoadingSpinner();
+    showLoadingSpinner();
 
 
-        document.addEventListener('DOMContentLoaded', function() {
-            hideLoadingSpinner();
-        });
+    document.addEventListener('DOMContentLoaded', function () {
+        hideLoadingSpinner();
+    });
 </script>
 </body>
 </html>
