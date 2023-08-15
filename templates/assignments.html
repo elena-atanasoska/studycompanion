@@ -8,13 +8,23 @@
 
             {% if upcoming_assignments.count == 0 and past_assignments.count == 0 %}
                 <h2 class="text-center primary-text mb-4">You do not have any assignments.</h2>
+
+                <div class="mx-5 px-4">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success mt-3">
+                                {{ message|safe }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
                  <div class="row text-center mx-auto py-4" style="max-width: 300px">
                     <a href="{% url 'add_assignment_task' %}" class="btn btn-primary px-4">Add New Assignment</a>
                 </div>
 
-                <div class="row text-center mx-auto py-4" style="max-width: 300px">
-                    <a href="{% url 'add_task' %}" class="btn btn-primary px-4">Add New Task</a>
-                </div>
+{#                <div class="row text-center mx-auto py-4" style="max-width: 300px">#}
+{#                    <a href="{% url 'add_task' %}" class="btn btn-primary px-4">Add New Task</a>#}
+{#                </div>#}
             {% else %}
                 <h2 class="mb-4 text-center primary-text"
                         style="font-size: 44px; padding: 10px; border-radius: 5px;">Upcoming Assignments</h2>
@@ -176,13 +186,17 @@
 
                     {% endfor %}
                 </div>
-        {% endif %}
-        </div>
-
-        <div class="fixed-bottom text-right mx-5 mb-3 d-flex flex-column align-items-end">
+                <div class="fixed-bottom text-right mx-5 mb-3 d-flex flex-column align-items-end">
             <a href="{% url 'add_task' %}" class="btn btn-primary px-4 mb-2">Add New Task</a>
             <a href="{% url 'add_assignment_task' %}" class="btn btn-primary px-4 mb-2">Add New Assignment</a>
         </div>
+        {% endif %}
+        </div>
+
+{#        <div class="fixed-bottom text-right mx-5 mb-3 d-flex flex-column align-items-end">#}
+{#            <a href="{% url 'add_task' %}" class="btn btn-primary px-4 mb-2">Add New Task</a>#}
+{#            <a href="{% url 'add_assignment_task' %}" class="btn btn-primary px-4 mb-2">Add New Assignment</a>#}
+{#        </div>#}
 
         </div>
 

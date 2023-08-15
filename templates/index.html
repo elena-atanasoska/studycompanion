@@ -15,6 +15,7 @@
 
             <div class="row">
                 <div class="col-md-6 mb-4">
+                    {% if assignment_most_progress %}
                     <div class="mb-2 mt-3">
                         <p class="h5 text-success"><i class="fas fa-check-circle text-success"></i> You have done
                             significant progress on:</p>
@@ -31,6 +32,13 @@
                             </div>
                         </div>
                     </div>
+                        {% else %}
+                        <div class="mb-2 mt-3 text-center">
+                        <p class="h5 text-danger"> You have no assignments.</p>
+                        <a href="{% url 'add_assignment_task' %}" class="btn btn-primary px-4">Add New Assignment</a>
+                    </div>
+                    {% endif %}
+                    {% if assignment_least_progress %}
                     <div class="mb-2 mt-4">
                         <p class="h5 text-warning"><i class="fas fa-exclamation-circle text-warning"></i> You need to
                             focus more on:</p>
@@ -47,7 +55,9 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
+                {% if nearest_reminder %}
                 <div class="col-md-6 mb-4 mt-5">
                     <div class="alert alert-warning rounded-pill mx-auto" role="alert" style="max-width: 400px;">
                         <div class="d-flex align-items-center">
@@ -69,6 +79,11 @@
                         </div>
                     </div>
                 </div>
+                    {% else %}
+                        <div class="col-md-6 mb-4 mt-3 text-center">
+                        <p class="h5 text-danger"> You have no reminders.</p>
+                        <a href="{% url 'add_reminder' %}" class="btn btn-primary px-4">Add New Reminder</a>
+                {% endif %}
             </div>
 
 
