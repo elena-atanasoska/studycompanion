@@ -50,7 +50,7 @@ class AssignmentForm(forms.ModelForm):
         for field in self.visible_fields():
             field.field.widget.attrs["class"] = "form-control"
         self.fields['name'].widget.attrs['placeholder'] = 'e.g. Assignment 1'
-        self.fields['description'].widget.attrs['placeholder'] = 'e.g. Complete exercise 2 and 3...'
+        self.fields['description'].widget.attrs['placeholder'] = 'e.g. You are supposed to solve...'
 
     def as_bootstrap(self):
         for name, field in self.fields.items():

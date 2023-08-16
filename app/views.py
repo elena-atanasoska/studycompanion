@@ -237,7 +237,7 @@ def edit_assignment(request, name=None):
         if form.is_valid():
             tasks_text = form.cleaned_data.get('tasks', '')
             task_names = [task.strip() for task in tasks_text.split('\n') if task.strip()]
-            Task.objects.filter(assignment=assignment).delete()  # Delete existing tasks
+            # Task.objects.filter(assignment=assignment).delete()  # Delete existing tasks
             for task_name in task_names:
                 Task.objects.create(name=task_name, assignment=assignment)
             form.save()

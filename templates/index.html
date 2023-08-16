@@ -6,14 +6,6 @@
 
 {% block content %}
 
-    <style>
-        body {
-            background-image: url("../static/background_image.png");
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-    </style>
-
     {% if user.is_authenticated %}
         <div class="text-center">
             <h1 class="primary-text"> Welcome back, {{ user.name }}! </h1>
